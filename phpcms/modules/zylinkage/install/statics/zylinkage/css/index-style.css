@@ -1,0 +1,40 @@
+﻿/*-------------通用-------------*/
+/*通用*/
+.fl { float: left }
+.fr { float: right }
+.clear { clear: both }
+@font-face {
+  font-family: 'iconfont';
+  src: url('../icon/iconfont.eot');
+  src: url('../icon/iconfont.eot?#iefix') format('embedded-opentype'),
+      url('../icon/iconfont.woff2') format('woff2'),
+      url('../icon/iconfont.woff') format('woff'),
+      url('../icon/iconfont.ttf') format('truetype'),
+      url('../icon/iconfont.svg#iconfont') format('svg');
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fl{float:left;}
+.fr{float:right;}
+.clear{clear:both;}
+
+/*------------ 地址开始 ------------------*/
+.address .list{background:#fff;margin-bottom:0.1rem;}
+.address .list .top,.address .list .addr{padding:0 0.14rem;height:0.36rem;line-height:0.36rem;font-size:0.14rem;}
+.address .list .top div{width:50%;}
+.address .list .bom{border-top:1px solid #eee;overflow:hidden;position:relative;}
+.address .list .bom .layui-form-item{padding:0.05rem 0.14rem;width:50%;box-sizing:border-box;float:left;margin-bottom:0;}
+.address .list .bom .layui-form-radio{line-height:0.25rem;}
+.address .list .bom .layui-form-radio>i{font-size:0.2rem;}
+.address .list .bom .layui-form-radio *{font-size:0.14rem;}
+.address .list .bom .action{width:50%;position:absolute;left:50%;top:50%;transform:translateY(-50%);-webkit-transform:translateY(-50%);-moz-transform:translateY(-50%);-o-transform:translateY(-50%);-ms-transform:translateY(-50%);text-align:right;}
+.address .list .bom .action a{font-size:0.14rem;margin-right:0.054rem;color:#888;}
+.address .list .bom .action a i{font-size:0.15rem;margin-right:0.054rem;}
+.address-btn{width:96%;display:block;margin:0.1rem auto;font-size:0.14rem;line-height:0.36rem;height:0.36rem;}
+/*------------ 地址结束 ------------------*/

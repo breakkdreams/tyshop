@@ -1,0 +1,206 @@
+﻿{template "zymember","top-head"}
+
+<body>
+    <div class='personal-head'>
+        <a onClick='javascript :history.back(-1);'>
+            <div class='fl head-icon'>
+                <i class='layui-icon layui-icon-left'></i>
+            </div>
+        </a>
+        <div class='fl head-icon'>
+        </div>
+        <div class='title'>
+            <span>个人资料</span>
+        </div>
+        <div class='fr head-icon'>
+
+        </div>
+        <div class='fr head-icon'>
+
+        </div>
+    </div>
+    <div style="height: 0.5rem;width: 100%;"></div>
+    <!--账户与安全-->
+    <div class="layui-container zhyaq" style="min-height: calc( 100vh - 0.5rem); background: #f1f1f1;">
+        <div class="layui-row">
+            <form class="layui-form " action="">
+                <!-- 二类式布局 -->
+                <div class="box box-indent sm-fs bg-fff">
+                    <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
+                        <ul>
+                            <!--<hr>
+                            <li>
+                                <a class="d-b no-way">
+                                    <div class="layui-col-xs8 layui-col-sm8 layui-col-md8">
+                                        <div class="h1"></div>
+                                        <div class="lh2 pl1">
+                                            <h2 class="sm-fs">实名认证</h2>
+                                        </div>
+                                        <div class="lh15 pl1">
+                                            <p><span class="c-afafaf xs-fs">完成实名认证，尊享更多服务</span></p>
+                                        </div>
+                                        <div class="h1"></div>
+                                    </div>
+                                    <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
+                                        <div class="h1"></div>
+                                        <div class="text-right lh35"><span class="pr1"><i class="fa fa-angle-right pl1 lg-fs"></i></span></div>
+                                        <div class="h1"></div>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <hr>
+                            <li>
+                                <a class="d-b no-way">
+                                    <div class="layui-col-xs8 layui-col-sm8 layui-col-md8">
+                                        <div class="h1"></div>
+                                        <div class="lh2 pl1">
+                                            <h2 class="sm-fs">账号关联</h2>
+                                        </div>
+                                        <div class="lh15 pl1">
+                                            <p><span class="c-afafaf xs-fs">可使用微信快速登录</span></p>
+                                        </div>
+                                        <div class="h1"></div>
+                                    </div>
+                                    <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
+                                        <div class="h1"></div>
+                                        <div class="text-right lh35"><span class="pr1"><i class="fa fa-angle-right pl1 lg-fs"></i></span></div>
+                                        <div class="h1"></div>
+                                    </div>
+                                </a>
+                            </li>-->
+                            <hr>
+                            <li>
+                                <a class="d-b" href="{APP_PATH}index.php?m=zymember&c=index&a=psd_edit">
+                                    <div class="layui-col-xs8 layui-col-sm8 layui-col-md8">
+                                        <div class="h1"></div>
+                                        <div class="lh2 pl1">
+                                            <h2 class="sm-fs">修改登录密码</h2>
+                                        </div>
+                                        <div class="lh15 pl1">
+                                            <p><span class="c-afafaf xs-fs">建议您定期更改密码以保护账户安全</span></p>
+                                        </div>
+                                        <div class="h1"></div>
+                                    </div>
+                                    <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
+                                        <div class="h1"></div>
+                                        <div class="text-right lh35"><span class="pr1"><i class="fa fa-angle-right pl1 lg-fs"></i></span></div>
+                                        <div class="h1"></div>
+                                    </div>
+                                </a>
+                            </li>
+                            <hr>
+                            <li>
+                                <a class="d-b" onClick="modify_phone()">
+                                    <div class="layui-col-xs8 layui-col-sm8 layui-col-md8">
+                                        <div class="h1"></div>
+                                        <div class="lh2 pl1">
+                                            <h2 class="sm-fs">修改支付密码</h2>
+                                        </div>
+                                        <div class="lh15 pl1">
+                                            <p><span class="c-afafaf xs-fs">建议您定期更改支付密码以保护财产的安全</span></p>
+                                        </div>
+                                        <div class="h1"></div>
+                                    </div>
+                                    <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
+                                        <div class="h1"></div>
+                                        <div class="text-right lh35"><span class="pr1"><i class="fa fa-angle-right pl1 lg-fs"></i></span></div>
+                                        <div class="h1"></div>
+                                    </div>
+                                </a>
+                            </li>
+                            <hr>
+                            <li id="info">
+                                <a class="d-b" href="{APP_PATH}index.php?m=zymember&c=index&a=update_mobile">
+                                    <div class="layui-col-xs8 layui-col-sm8 layui-col-md8">
+                                        <div class="h1"></div>
+                                        <div class="lh2 pl1">
+                                            <h2 class="sm-fs">修改手机号码</h2>
+                                        </div>
+                                        <div class="lh15 pl1">
+                                            <p><span class="c-afafaf xs-fs">若手机更换请尽快修改</span></p>
+                                        </div>
+                                        <div class="h1"></div>
+                                    </div>
+                                    <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
+                                        <div class="h1"></div>
+                                        <div class="text-right lh35"><span class="sm-fs c-afafaf">{{ mobile }}</span><span class="pr1"><i class="fa fa-angle-right pl1 lg-fs"></i></span></div>
+                                        <div class="h1"></div>
+                                    </div>
+                                </a>
+                            </li>
+                            <hr>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="h2 clear"></div>
+                <div class="box box-indent sm-fs bg-fff">
+                    <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
+                        <ul>
+                            <hr>
+                            <li>
+                                <a class="d-b no-way">
+                                    <div class="layui-form-item primary-item">
+                                        <label class="layui-form-label primary-label-1">账户申诉</label>
+                                        <div class="layui-input-block text-right">
+                                            <span class="c-afafaf">无法验证身份？试试自助申诉</span><span class=""><i class="fa fa-angle-right pl1 lg-fs"></i></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <hr>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <!-- 二类式布局 end -->
+            </form>
+        </div>
+    </div>
+
+    {template "zymember","bottom-footer"}
+    {template "zymember","footer"}
+
+    <script>
+        $(function () {
+            var userid = {$_userid};
+            aj.post('index.php?m=zymember&c=zymember_api&a=pub_memberinfo', { 'userid': userid, 'field': 'mobile' }, function (data) {
+                console.log(data.data);
+                if (data.status == 'error') {
+                    layer.msg(data.message);
+                } else {
+                    var info = new Vue({
+                        el: '#info',
+                        data: data.data
+                    });
+                };
+            });
+        });
+		
+        //由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：
+        ;
+        ! function () {
+            var layer = layui.layer,
+                form = layui.form,
+                $ = layui.jquery,
+                upload = layui.upload,
+                table = layui.table;
+
+            $('.no-way').on('click', function () {
+                layer.msg('该栏目正在开发中...');
+            });
+			
+        }();
+		function modify_phone() {
+            layer.confirm('你是否记得原支付密码？', {
+                btn: ['记得', '不记得'] //按钮
+            }, function () {
+				javascript: location.href = 'index.php?m=zymember&c=index&a=paypsd_edit_jd';
+            }, function () {
+                javascript: location.href = 'index.php?m=zymember&c=index&a=paypsd_edit';
+            });
+        };
+    </script>
+</body>
+</html>

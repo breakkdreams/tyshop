@@ -1,0 +1,438 @@
+﻿{template "zyorder","top-head"}
+
+<body class="bg-f4f4f4">
+    <style>
+        .layui-rate { padding: 0 !important; vertical-align: inherit;}
+        /*span.layui-inline { margin-top: -0.06rem; }*/
+        .layui-upload-list img { width: 1rem; }
+		.layui-textarea{ font-size: 0.13rem;}
+		[id*=test] span.layui-inline{ color: #b3b3b3}
+        .layui-col-xs3 .layui-upload-img { width: 100%; height: 100%; object-fit: cover; }
+		.layui-upload .upimg>div{overflow: hidden;}
+		.layui-upload .upimg>div::after{content: ''; padding-top: 100%;display: block;}
+		.layui-upload .upimg img{ position: absolute;}
+		.graphs{ background: url({APP_PATH}statics/public/images/upimg.png); background-size: 100%; padding: 0; height: auto;width: 100%; border: 1px dashed #b5b5b5;}
+		.graphs::after{content: '';display: block;padding-top: 100%;}
+		.layui-upload .upimg i{ position: absolute; z-index: 9; left: calc(50% - 0.15rem);top: calc(50% - 0.15rem);font-size: 0.3rem;}
+		@media screen and (max-width: 450px){
+			.layui-form-item .layui-inline{ margin-bottom: 0; display: inline-block;}
+			.layui-rate, .layui-rate * {
+				display: inline-block !important;
+				vertical-align: middle;
+			}
+		}
+    </style>
+    <form class="layui-form" action="">
+		<div class="personal-head">
+			<a onclick="javascript :history.back(-1);">
+				<div class="fl head-icon">
+					<i class="layui-icon layui-icon-left"></i>
+				</div>
+			</a>
+			<div class="fl head-icon">
+			</div>
+			<div class="title">
+				<span>发表评论</span>
+			</div>
+			<div class="fr head-text">
+			<botton type="botton" class="d-b sm-fs release" lay-submit lay-filter="release">发布</botton>
+			</div>
+		</div>
+		<div class="h5"></div>
+   
+    <script id="demo" type="text/html">
+	{{# layui.each(d.data,function(i,v){ }}
+		<div class="" style=" line-height: 0.4rem; background:#fff;border-top:1px solid #f1f1f1;border-bottom:1px solid #f1f1f1;">
+			<div class="layui-form-item" style="margin-bottom:0;">
+				<label class="layui-form-label" style=" width: 0.3rem; padding: 0.045rem 0.1rem;">
+					<img src="{{ v.goods_img }}" width="100%">
+				</label>
+				<div class="layui-input-block" style="margin-left:0.5rem;">
+					{{# layui.each(d.set[0],function(index,val){  }}
+					<div class="" style="height: 0.4rem; line-height: 0.4rem;overflow: hidden;">
+						<span style="padding-left:0.1rem;font-size:0.13rem;">
+							<strong>{{ val.name }}</strong>
+							<div id="test{{ i }}-{{ index }}-{{ val.id }}" data-id="{{ v.goods_id }}" data-spec="{{ v.specid }}"></div>
+							<input name="rate-{{ v.id }}-{{ val.id }}" data-id="{{ v.id }}-{{ val.id }}" value="5" type="hidden">
+						</span>
+						<div class="clear"></div>
+					</div>
+					{{# })  }}
+				</div>
+			</div>
+		</div>	
+		<textarea name="text-{{ v.id }}" placeholder="宝贝满足您的期待吗？说说您的使用心得，分享给想买他们的人吧" class="layui-textarea" style="resize: none;border:0px;"></textarea>
+		<ul style="background:#fff;border-top:1px solid #f1f1f1;padding:5px 0;">
+			<li>
+				<div class="layui-upload pl05 pr05">
+					<div class="layui-upload-list">
+						<div class="layui-row layui-col-space10">
+							<div class="layui-col-xs3 layui-col-sm3 upbutton layui-col-md3 ">
+								<button type="button" class="layui-btn layui-btn-sm p-r graphs" data-id="{{ v.goods_id }}" data-spec="{{ v.specid }}"></button>
+							</div>
+						</div>
+						<!--<input name="img-{{ v.id }}" value="" type="hidden">-->
+						<div class="clear"></div>
+					</div>
+				</div>
+			</li>
+		</ul>
+		<div class="" style="background:#fff;border-top:1px solid #f1f1f1;height: 0.3rem;">
+            <div style="float:left;width:0.3rem;padding-top:0.05rem;padding-left:0.1rem;">
+                <input type="checkbox" name="on-{{ v.id }}" title="匿名" lay-skin="primary">
+            </div>
+        </div>
+		<div class="h2"></div>
+	{{# }) }}
+	<div class="h10"></div>
+	</script>
+	<div id="view"></div>	
+		
+<!--		<div class="" style=" line-height: 0.4rem; background:#fff;border-top:1px solid #f1f1f1;border-bottom:1px solid #f1f1f1;">
+			<div style="float:left;width:0.3rem;padding-top:0.01rem;padding-left:0.1rem;">
+				<img src="http://pub.300c.cn/uploadfile/2019/0312/20190312112252497.png" width="100%">
+			</div>
+			<span style="float:left;padding-left:0.1rem;font-size:0.13rem;">
+				描述相符
+				<div id="test3"></div>
+			</span>
+			<div class="clear"></div>
+		</div>
+		<textarea name="desc" placeholder="宝贝满足您的期待吗？说说您的使用心得，分享给想买他们的人吧" class="layui-textarea" style="resize: none;border:0px;"></textarea>
+		<ul style="background:#fff;border-top:1px solid #f1f1f1;padding:5px 0;">
+			<li>
+				<div class="layui-upload pl05 pr05">
+					<div class="layui-upload-list">
+						<div class="layui-row layui-col-space10">
+							<div class="layui-col-xs3 layui-col-sm3 upbutton layui-col-md3 ">
+								<button type="button" class="layui-btn layui-btn-sm p-r graphs" data-id="55"></button>
+							</div>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</div>
+			</li>
+		</ul>
+-->        
+   </form>
+
+	{template "hpshop","footer"}
+    <script>
+        $(function () {
+        //由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：
+        ;
+        ! function () {
+            var layer = layui.layer
+                , form = layui.form
+                , $ = layui.jquery
+				,laytpl = layui.laytpl
+				,rate = layui.rate
+                , upload = layui.upload
+                , table = layui.table;
+				var orderid = '{$_GET[orderid]}';
+				console.log(orderid);
+			    var set = [];
+				var upimg = [];
+				aj.get('index.php?m=zyorder&c=zyorder_api&a=getevaluateset',{},function(data){
+					console.log(data);
+					if(data.status == 'success'){
+						set.push(data.data);
+						if(set.length > 0){
+							$.ajax({
+								url:'index.php?m=zyorder&c=zyorder_api&a=uordgoodsinfo',
+								type:'POST', //GET
+								async:false,    //或true,是否同步
+								data:{
+									oid:orderid
+								},
+								timeout:5000,    //超时时间
+								dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+								success:function(res){
+									if(data.status == 'success'){
+										//console.log(res.data);
+										var data1 = { //数据
+											"data":res.data
+											,"set":set
+										}
+										//console.log(data1);
+										var getTpl = demo.innerHTML
+										,view = document.getElementById('view');
+										laytpl(getTpl).render(data1, function(html){
+											view.innerHTML = html;
+											$.each(data1.data,function(i,v){
+												$.each(data1.set[0],function(index,val){
+													//console.log(v.goods_id,v.specid);
+													layui.use(['rate'], function () {
+														var rate = layui.rate;
+														rate.render({
+															elem: '#test'+i+'-'+index+'-'+val.id,
+															value: 5 ,//初始值
+															text: true,
+															setText: function (value) { //自定义文本的回调
+																var arrs = {
+																	'1': '非常差',
+																	'2': '差',
+																	'3': '中等',
+																	'4': '好',
+																	'5': '非常好'
+																};
+																//$($(this)[0].elem).parents('.layui-upload-list').find('input').val(value);
+																$($(this)[0].elem).next('input').val(value);
+																//console.log(value);
+																this.span.text(arrs[value] || (""));
+																
+															}
+														});
+													});
+													
+												})
+												
+											})
+											
+
+											$('.graphs').each(function(i,v){
+												//console.log(i,v);
+												//var _this = $('.graphs').eq(i);
+												//console.log($('.graphs').eq(i).parents('.upimg').html());
+												//多图片上传
+												upload.render({
+													elem: this
+													, url: 'api.php?op=single_uploadfile&types=2'
+													, multiple: true
+													, number : 4
+													, size : '100000'
+													, accept : 'images'
+													, choose: function (obj) {
+														//当前对象位置
+														var _this = $($(this)[0].elem).parents('.layui-upload-list');
+														//console.log($($(this)[0].elem));
+
+														
+														//清空之前的图片
+														$($(this)[0].elem).parents('.layui-upload').find('[name*=img]').val('');
+														//console.log($($(this)[0].elem).parents('.layui-upload').find('[name*=img]').val());
+														//将每次选择的文件追加到文件队列
+														var files = obj.pushFile();
+														//预读本地文件示例，不支持ie8
+															obj.preview(function (index, file, result) {
+																console.log(index);
+																_this.children('.layui-row').prepend('<div class="layui-col-xs3 upimg layui-col-sm3 layui-col-md3 "><div class="p-r"><span class="iconfont icon-roundclosefill del p-a" style="top: 0;right: 0;width: 16px;height: 16px;color: #ff0000;z-index: 10;background: #fff;border-radius: 50px;" ></span><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i><img data-index="'+ index +'" src="' + result + '" alt="' + file.name + '" class="layui-upload-img"></div></div>');
+															
+																//删除图片											
+																$('form').on('click', '.del', function () {
+																	delete files[index];
+																	var __this = $(this);
+																	var tmp = __this.parents('.upimg').find('img').data('tmp');
+																	console.log(tmp);
+																	if(tmp){
+																		aj.post('api.php?op=deletefile',{filename:tmp},function(data){
+																			//console.log(data);
+																			if(data.code == 200){
+																				var thisimg = __this.parents('.layui-upload-list').find('[name*=img]').val().split(',');
+																				console.log('图片',tmp);
+																				console.log('去前',thisimg);
+																				thisimg.splice($.inArray(tmp,thisimg),1);
+																				console.log('去后',thisimg);
+																				var imgs = thisimg.join(',');
+
+																				if (imgs.substr(0,1)==',') imgs = imgs.substr(1);
+																				console.log(imgs);
+																				//layer.msg(data.message);
+																				__this.parents('.layui-upload-list').find('[name*=img]').val(imgs);
+																				__this.parents('.upimg').remove();
+
+																			}else{
+																				//layer.msg(data.message);
+																			}
+																		})
+																	}else{
+																		//未上传成功清理
+																		__this.parents('.upimg').remove();
+																	}
+																});
+															
+															
+															});
+														
+														
+													}
+													, done: function (res, index, upload) {
+														upimg = $($(this)[0].elem).parents('.layui-upload').find('[name*=img]').val().split(',');
+														console.log(upimg,index);									if(res.code == 200){
+															upimg.push(res.data.tmp);
+															//console.log(index);
+															$('[data-index='+index+']').attr('data-tmp',res.data.tmp);
+															$('[data-index='+index+']').prev('i').remove();
+														}else{
+															this.error(index, upload);
+														}
+														console.log(upimg.join(','));
+														var imgs = upimg.join(',');
+														
+														if (imgs.substr(0,1)==',') imgs = imgs.substr(1);
+														
+														$($(this)[0].elem).parents('.layui-upload').find('[name*=img]').val(imgs);
+													}
+													,allDone: function(obj){ //当文件全部被提交后，才触发
+														//console.log(obj.total); //得到总文件数
+														//console.log(obj.successful); //请求成功的文件数
+														//console.log(obj.aborted); //请求失败的文件数
+													}
+												});
+
+											})
+
+											form.render(); //更新全部
+										});
+
+									}else{
+										layer.msg(res.message);
+									}
+								}
+							});
+
+						}
+					}else{
+						layer.msg(data.message);
+					}
+				})
+			
+			
+			form.on('submit(release)', function(data){
+				//console.log(data.field);
+				// 订单号下的商品id
+				var olds = [];
+				var all_release = [];
+				
+				$.each(data.field, function(idx, obj) {
+					var id = idx.split('-')[1];
+					//获取商品id
+					if(id){
+						if($.inArray(id, olds) < 0){
+							olds.push(id);
+						}
+					}
+				});
+				
+				//生成数组
+				for(id in olds){
+					all_release[olds[id]] = [];
+				}
+				
+				
+				$.each(data.field, function(idx, obj) {
+					var class1 = idx.split('-');
+					var name = class1[0];
+					var id = class1[1];
+					var release = {} ;
+					//vid 下级id
+					if(class1[2]){
+						var vid = class1[2];
+					}
+					if( class1[1] && class1[1] > 0){
+						//订单号
+						if(!release['oid']){
+							release['oid'] = orderid;
+						}
+						//
+						if(vid){
+							if(!release[name]){
+								release[name] = [];
+							}
+							release[name].push({'id':vid, 'val':obj });
+						}else{
+							release[name] = {'id':'', 'val':obj };
+						}
+						console.log(release);
+						all_release[id] = release;
+					}
+				});
+				
+				var all_up = all_release.filter(s => $.trim(s).length > 0);
+				
+				console.log(all_release,all_up);
+				
+				/*$.each(data.field, function(idx, obj) {
+					//console.log(idx,obj);
+					var class1 = idx.split('-');
+					var name = '"'+class1[0]+'"';
+					var id = class1[1];
+					if(class1[2]){
+						var val = class1[2];
+					}
+					var bname = {};
+					if(class1[1] && class1[1] > 0){
+						if(val){
+							bname[name] = {'oid':id,'id':val,'val':obj};
+							//console.log(name,val,obj);
+							//var group = {'name':name,'id':val,'val':obj};
+							//all[id][name][val] = obj;
+							//all[id] = {'name':name,'id':val,'val':obj};
+						}else{
+							bname[name] = {'oid':id,'id':'','val':obj};
+							//console.log(name,obj);
+							//var group = {'name':name,'val':obj};
+							//all[id][name] = obj;
+							//all[id] = {'name':name,'val':obj};
+						}
+					}
+					//console.log(bname);
+					bb[bb.length] = bname;
+					//console.log(idx,obj,idx.split('-'));
+				});*/
+				
+				
+				
+				/*var bc = {};
+				var olds = [];
+				$.each(data.field, function(idx, obj) {
+					if(!bb[id]){
+						bb[id] = {};
+					}
+					//console.log(idx,obj);
+					var class1 = idx.split('-');
+					var name = class1[0];
+					var id = class1[1];
+					if(id){
+						if($.inArray(id, olds) < 0){
+							olds.push(id);
+						}
+					}
+					if(class1[2]){
+						var val = class1[2];
+					}
+					if( class1[1] && class1[1] > 0){
+						//console.log(name,!bc[name]);
+						if(!bc['oid']){
+							bc['oid'] = orderid;
+						}
+						if(val){
+							if(!bc[name]){
+								bc[name] = [];
+							}
+							bc[name][val] = {'id':val, 'val':obj };
+						}else{
+							console.log(idx,obj);
+							bc[name] = {'id':'', 'val':obj };
+						}
+
+						console.log(bc);
+						console.log(bc[name]);
+						bb[id] = bc;
+						console.log(bc);
+					}
+					
+					
+					//console.log(idx,obj,idx.split('-'));
+				});*/
+				//console.log(all);
+				//遍历选中购物车catid
+				return false;
+			});
+
+       }();
+        });
+    </script>
+</body>
+
+</html>

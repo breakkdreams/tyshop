@@ -1,0 +1,210 @@
+﻿{template "zymember","top-head"}
+
+<style>
+    .layui-btn.on { background: #c9c9c9; color: #666; cursor: default; }
+</style>
+<body>
+    <div class='personal-head'>
+        <a onClick='javascript :history.back(-1);'>
+            <div class='fl head-icon'>
+                <i class='layui-icon layui-icon-left'></i>
+            </div>
+        </a>
+        <div class='fl head-icon'>
+        </div>
+        <div class='title'>
+            <span>注册</span>
+        </div>
+        <div class='fr head-icon'>
+
+        </div>
+        <div class='fr head-icon'>
+
+        </div>
+    </div>
+    <div style="height: 0.5rem;width: 100%;"></div>
+
+
+    <!--注册-->
+    <div class="layui-container register" style="min-height: calc( 100vh - 1rem); background: #f1f1f1;">
+        <div class="layui-row">
+            <div class="h2"></div>
+            <div class="bg-fff radius1 login-box ml2 mr2">
+                <div class="h2"></div>
+                <div class="login-logo">
+                    <div class="logo text-center">
+                        <img src="{APP_PATH}statics/public/images/logo.png" height="100%">
+                    </div>
+                </div>
+                <div class="h2"></div>
+                <div class="pl2 pr2">
+                    <div class="layui-tab layui-tab-brief sm-fs" lay-filter="login-TabBrief">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this layui-col-xs12 layui-col-sm12 layui-col-md12">注册账户</li>
+                        </ul>
+                        <div class="h1"></div>
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">
+                                <form class="layui-form" action="">
+                                    <div class="layui-form-item p-r">
+                                        <span class="p-a br1-e6e6e6"><i class="layui-icon layui-icon-cellphone"></i></span>
+                                        <input type="text" name="mobile" lay-verify="phone" autocomplete="off" placeholder="请输入手机号码" class="layui-input  input-pl36 ">
+                                    </div>
+                                    <div class="h1"></div>
+                                    <div class="layui-form-item p-r">
+                                        <span class="p-a  br1-e6e6e6"><i class="layui-icon layui-icon-password"></i></span>
+                                        <input type="password" name="password" lay-verify="pass" autocomplete="off" placeholder="请输入6-12位密码" class="layui-input  input-pl36">
+                                    </div>
+                                    <div class="h1"></div>
+                                    <div class="layui-form-item p-r">
+                                        <input type="text" name="verify_code" lay-verify="code" autocomplete="off" placeholder="请输入校验码" class="layui-input" style=" width:calc(100% - 1.25rem);">
+                                        <button class="layui-btn p-a" type="button" id="obtain">获取校验码</button>
+
+                                    </div>
+                                    <div class="h1"></div>
+                                    <div class="lh015 xs-fs">
+                                        <div class="layui-col-xs6 layui-col-sm6 layui-col-md6 text-left"><a href="{APP_PATH}index.php?m=zymember&c=index&a=login" class="c-afafaf">已有账户，立即登录</a></div>
+                                        <div class="layui-col-xs6 layui-col-sm6 layui-col-md6 text-right"><a href="" class="c-afafaf">找回密码</a></div>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div class="h1"></div>
+                                    <div class="lh015 xs-fs">
+                                        <input type="checkbox" name="protocol" lay-skin="primary" title="阅读并同意"
+                                               checked="">
+                                               <a id='' class='ml05 c-primary' onClick="func10()">《卓远网络注册协议》</a>
+                                    </div>
+                                    
+                                    <div class="h1"></div>
+                                    <div class="layui-form-item submit">
+                                        <botton class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="submit">注册并登录</botton>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="h2"></div>
+            </div>
+        </div>
+    </div>
+    {template "zymember","footer"}
+    <script>
+        //由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：
+        ;
+        ! function () {
+            var layer = layui.layer,
+                form = layui.form,
+                $ = layui.jquery,
+                upload = layui.upload,
+                table = layui.table;
+
+            $('.no-way').on('click', function () {
+                layer.msg('该栏目正在开发中...');
+            });
+
+            //自定义验证规则
+            form.verify({
+                pass: [
+                    /^[\S]{6,12}$/
+                    , '密码必须6到12位，且不能出现空格'
+                ]
+                , code: function (value) {
+                    if (value.length != 6) {
+                        return '请输入6位校验码';
+                    }
+                }
+            });
+                
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                console.log(data.field);
+                if (!data.field.verify_code) {
+                    layer.msg('请输入6位校验码');
+                }
+                if (data.field.mobile && data.field.password && data.field.verify_code) {
+                    data.field.type = '1';
+                    aj.post('index.php?m=zymember&c=api&a=sms_registered', data.field, function (data) {
+                        console.log(data);
+                        if (data.status == 'error') {
+                            layer.msg(data.message);
+                        } else {
+                            layer.msg(data.message);
+                            setTimeout("javascript:location.href='" + data.data.forward + "'", 1000);
+
+
+                        }
+                    });
+                    console.log(data.field);
+                }
+                return false;
+            });
+        }();
+                function func10() {
+                    //获取注册协议
+                    aj.post('index.php?m=zymember&c=api&a=registration_agreement', '', function (data) {
+                        //console.log(data);
+                        if (data.status == 'error') {
+                            layer.msg(data.message);
+                        } else {
+                            layer.msg(data.message);
+                            //setTimeout("javascript:location.href='" + data.data.forward + "'", 1000);
+                            var regprotocol = data.data.regprotocol;
+                            console.log(regprotocol);
+
+                            //iframe层
+                            layer.open({
+                                type: 1,
+                                title: 'phpcms注册协议',
+                                shadeClose: true,
+                                shade: 0.8,
+                                area: ['90%', '90%'],
+                                content: regprotocol //iframe的url
+                            });
+
+                        }
+                    });
+                }
+        $(function () {
+			
+            //短信监听手机号码提交
+            $('#obtain').on('click', function () {
+                var _this = $(this);
+                var d = {};
+                var formdata = _this.parents('form').serializeArray();
+                $.each(formdata, function () {
+                    d[this.name] = this.value;
+                });
+                if (d.mobile) {
+                    if (!_this.hasClass("on")) {
+						aj.post('index.php?m=zymessagesys&c=messagesys_api&a=pub_sendsms',{'mobile':d.mobile}, function (data) {
+							console.log(data);
+							if (data.status == 'error') {
+								layer.msg(data.message);
+							} else {
+								layer.msg('发送成功');
+								$.leftTime(60, function (d) {
+									if (d.status) {
+										_this.addClass("on");
+										_this.html("（" + (d.s == "00" ? "60" : d.s) + "）后重获");
+									} else {
+										_this.removeClass("on");
+										_this.html("获取校验码");
+									}
+								});
+							}
+						});
+                    } else {
+                        layer.msg('信息已发送，请勿重复操作');
+                    }
+
+                } else {
+                    layer.msg('手机号码未填写');
+                }
+            })
+        })
+
+    </script>
+</body>
+
+</html>

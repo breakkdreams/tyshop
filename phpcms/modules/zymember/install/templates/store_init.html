@@ -1,0 +1,303 @@
+﻿{template "zymember","top-head"}
+
+
+<style>
+    .personal-head {
+        background: linear-gradient(90deg, #5f3ceb, #598cff);
+        color: #fff;
+    }
+
+    i.layui-icon.layui-icon-left {
+        color: #fff;
+    }
+
+    .member-index-head .more .layui-badge {
+        background: #321ab5;
+    }
+
+    .member-index-head .portrait {
+        border-radius: 0;
+    }
+</style>
+
+<body class="bg-f4f4f4">
+    <div class='personal-head'>
+        <a onClick='javascript :history.back(-1);'>
+            <div class='fl head-icon'>
+                <i class='layui-icon layui-icon-left'></i>
+            </div>
+        </a>
+        <div class='fl head-icon'>
+        </div>
+        <div class='title'>
+            <span>卖家订单中心</span>
+        </div>
+        <a href='{APP_PATH}index.php?m=zymember&c=index&a=shop_personal_data'>
+			<div class='fr head-icon' style="color: #fff;">
+				<i class='layui-icon layui-icon-set'></i>
+			</div>
+        </a>
+        <div class='fr head-icon'>
+
+        </div>
+    </div>
+    <div style="height: 0.5rem;width: 100%;"></div>
+
+    <!--会员中心-->
+    <div class="layui-container hyzx">
+        <div class="layui-row">
+            <div class="bg-fff">
+                <div class="member-index-head ">
+                    <div class="h1"></div>
+                    <div class="layui-col-xs3 layui-col-sm3 layui-col-md3">
+
+                        <div class="portrait mgauto">
+                            <img src="{IMG_PATH}member/nophoto.gif">
+                        </div>
+                        <div class="h2"></div>
+                    </div>
+                    <div class="layui-col-xs6 layui-col-sm6 layui-col-md6" id="info">
+                        <div class="name"><span class=" c-fff">{{ shopname }}</span></div>
+						<!--<p class="more"><span class="layui-badge"></span></p>-->
+                        <p class="more"><span class="c-fff d-ib">店长:{{ nickname }}</span></p>
+                    </div>
+                    <div class="layui-col-xs2 layui-col-xs-offset1 layui-col-sm2 layui-col-sm-offset1 layui-col-md2 layui-col-md-offset1 ">
+
+                        <div class="clock">
+                            <div class="h2"></div>
+                            <!--<button class="layui-btn layui-btn-xs"><span class="fa fa-calendar-times-o mr05"></span>签到</button>-->
+                            <div class="h2"></div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="chunk-list bg-fff ml1 mr1 sm-fs radius1 mt1">
+                <div class="pl1 pr1">
+                    <div class="layui-col-xs3 layui-col-sm3 layui-col-md3">
+                        <a class="d-b" href="{APP_PATH}index.php?m=hpshop&c=index&a=store_goodsfb">
+                            <div class="h1"></div>
+                            <div class="icon-box icon-linear">
+                                <span class="icon iconfont icon-goodsfill"></span>
+                            </div>
+                            <div class="h05"></div>
+                            <p class="text text-center icon-linear">商品发布</p>
+                            <div class="h1"></div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs3 layui-col-sm3 layui-col-md3">
+                        <a class="d-b" href="卖家订单中心-待发货.html">
+                            <div class="h1"></div>
+                            <div class="icon-box icon-linear">
+                                <span class="icon iconfont icon-babyfill"></span>
+                            </div>
+                            <div class="h05"></div>
+                            <p class="text text-center icon-linear">订单</p>
+                            <div class="h1"></div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs3 layui-col-sm3 layui-col-md3 no-way">
+                        <a class="d-b ">
+                            <div class="h1"></div>
+                            <div class="icon-box icon-linear">
+                                <span class="icon iconfont icon-creativefill"></span>
+                            </div>
+                            <div class="h05"></div>
+                            <p class="text text-center icon-linear">营销</p>
+                            <div class="h1"></div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs3 layui-col-sm3 layui-col-md3 no-way">
+                        <a class="d-b">
+                            <div class="h1"></div>
+                            <div class="icon-box icon-linear">
+                                <span class="icon iconfont icon-presentfill"></span>
+                            </div>
+                            <div class="h05"></div>
+                            <p class="text text-center icon-linear">货源</p>
+                            <div class="h1"></div>
+                        </a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+
+            <!-- 外层空 -->
+            <div class="h1"></div>
+
+            <div class="chunk-list bg-fff ml1 mr1 sm-fs radius1">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
+                    <div class="layui-form-item pl1 pr1">
+                        <label class="layui-form-label lg-fs w-100">
+                            <span class="layui-icon layui-icon-app mr05"></span>店铺数据
+                        </label>
+                    </div>
+                </div>
+                <hr>
+                <div class=" pl1 pr1">
+                    <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
+                        <div class="h1"></div>
+                        <div class="icon-box">
+                            <p><span class="lg-fs">10</span></p>
+                        </div>
+                        <div class="h05"></div>
+                        <p class="text text-center">今日订单数</p>
+                        <div class="h1"></div>
+                    </div>
+                    <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
+                        <a class="d-b" href="卖家订单中心-退款中.html">
+                            <div class="h1"></div>
+                            <div class="icon-box">
+                                <p><span class="lg-fs">0</span></p>
+                            </div>
+                            <div class="h05"></div>
+                            <p class="text text-center">退款中</p>
+                            <div class="h1"></div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
+                        <a class="d-b" href="卖家订单中心-待付款.html">
+                            <div class="h1"></div>
+                            <div class="icon-box">
+                                <p><span class="lg-fs">1</span></p>
+                            </div>
+                            <div class="h05"></div>
+                            <p class="text text-center">待付款</p>
+                            <div class="h1"></div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
+                        <a class="d-b" href="卖家订单中心-待发货.html">
+                            <div class="h1"></div>
+                            <div class="icon-box">
+                                <span class="layui-badge-dot"></span>
+                                <p><span class="lg-fs c-eb3c3c">0</span></p>
+                            </div>
+                            <div class="h05"></div>
+                            <p class="text text-center c-eb3c3c">待发货</p>
+                            <div class="h1"></div>
+                        </a>
+                    </div>
+
+                    <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
+                        <a class="d-b" href="{APP_PATH}index.php?m=hpshop&c=index&a=store_yshelves">
+                            <div class="h1"></div>
+                            <div class="icon-box">
+                                <p><span class="lg-fs">10</span></p>
+                            </div>
+                            <div class="h05"></div>
+                            <p class="text text-center">已上架</p>
+                            <div class="h1"></div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
+                        <a class="d-b" href="{APP_PATH}index.php?m=hpshop&c=index&a=store_wshelves">
+                            <div class="h1"></div>
+                            <div class="icon-box">
+                                <p><span class="lg-fs">0</span></p>
+                            </div>
+                            <div class="h05"></div>
+                            <p class="text text-center">未上架</p>
+                            <div class="h1"></div>
+                        </a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+            <div class="h1"></div>
+            
+            <div class="chunk-list bg-fff ml1 mr1 sm-fs radius1">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
+                    <div class="layui-form-item pl1 pr1">
+                        <label class="layui-form-label lg-fs w-100">
+                            <span class="layui-icon layui-icon-app mr05"></span>商品管理
+                        </label>
+                    </div>
+                </div>
+                <hr>
+                <div class=" pl1 pr1">
+                    <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
+                        <a class="d-b" href="{APP_PATH}index.php?m=hpshop&c=index&a=store_sell">
+							<div class="h1"></div>
+							<div class="icon-box">
+								<p><span class="lg-fs">10</span></p>
+							</div>
+							<div class="h05"></div>
+							<p class="text text-center">出售中</p>
+							<div class="h1"></div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
+                        <a class="d-b" href="{APP_PATH}index.php?m=hpshop&c=index&a=store_wshelves">
+                            <div class="h1"></div>
+                            <div class="icon-box">
+                                <p><span class="lg-fs">0</span></p>
+                            </div>
+                            <div class="h05"></div>
+                            <p class="text text-center">未上架</p>
+                            <div class="h1"></div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
+                        <a class="d-b" href="{APP_PATH}index.php?m=hpshop&c=index&a=store_waudit">
+                            <div class="h1"></div>
+                            <div class="icon-box">
+                                <p><span class="lg-fs">1</span></p>
+                            </div>
+                            <div class="h05"></div>
+                            <p class="text text-center">未审核</p>
+                            <div class="h1"></div>
+                        </a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+            <div class="h1"></div>
+            
+
+            <p class="end"></p>
+        </div>
+    </div>
+    {template "zymember","footer"}
+
+
+
+
+        <script>
+        $(function () {
+            var userid = {$_userid};
+            aj.post('index.php?m=zymember&c=zymember_api&a=pub_memberinfo', { 'userid': userid, 'field': 'nickname,userid,shopname' }, function (data) {
+                //console.log(data.data);
+                if (data.status == 'error') {
+                    layer.msg(data.message);
+                } else {
+                    var info = new Vue({
+                        el: '#info',
+                        data: data.data
+                    })
+                }
+            });
+        })
+
+            //由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：
+            ;
+        ! function () {
+            var layer = layui.layer,
+                form = layui.form,
+                $ = layui.jquery,
+                upload = layui.upload,
+                table = layui.table;
+
+            $('.no-way').on('click', function () {
+                layer.msg('该栏目正在开发中...');
+            });
+
+
+        }();
+    </script>
+</body>
+
+</html>

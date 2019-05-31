@@ -1,0 +1,34 @@
+<style>
+    .index-footer ul li{width:33.33%;}
+</style>
+<div class="index-footer">
+    <ul>
+        <li {if $_GET['m']==""}class="fl on"{else}class="fl"{/if}>
+            <a href="index.php">
+                <div class="index-footer-img footer-home"></div>
+                <div class="index-footer-column">首页</div>
+            </a>
+        </li>
+        <!--<li class="fl">
+            <a href="index.php?m=category&c=index">
+                <div class="index-footer-img footer-column"></div>
+                <div class="index-footer-column">分类</div>
+            </a>
+        </li>-->
+        <li class="fl">
+            <a href="index.php?m=content&c=index&a=cart">
+                <div class="index-footer-img footer-cart">
+                </div>
+                <div class="index-footer-column">购物车</div>
+            </a>
+        </li>
+        <li class="fl">
+            <a href="index.php?m=zymember&c=index">
+                <div class="index-footer-img footer-user"></div>
+                <div class="index-footer-column">我的</div>
+            </a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

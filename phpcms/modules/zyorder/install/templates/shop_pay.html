@@ -1,0 +1,260 @@
+﻿{template "zyorder","top-head"}
+
+<body>
+    <div class='personal-head'>
+        <a onClick='javascript :history.back(-1);'>
+            <div class='fl head-icon'>
+                <i class='layui-icon layui-icon-left'></i>
+            </div>
+        </a>
+        <div class='fl head-icon'>
+        </div>
+        <div class='title'>
+            <span>订单支付</span>
+        </div>
+        <div class='fr head-icon'>
+
+        </div>
+        <div class='fr head-icon'>
+
+        </div>
+    </div>
+    <div style="height: 0.5rem;width: 100%;"></div>
+		<style>
+			.ware-other .payment li .more{ top: calc(0.6rem - 0.52rem);  }
+		</style>
+    <!--地址-->
+    <form class="" id="order">
+       
+        <div class="choose-address">
+            <div class="address">
+                <div class="Consignee">
+                    <div class="fl">收货人：<span>{{ address.lx_name }}</span></div>
+                    <div class="fr"><span class="mobile">{{ address.lx_mobile }}</span></div>
+                    <div class="clear"></div>
+                </div>
+                <div class="Consignee">
+                    <div class="address-content"><span>收货地址：</span><template v-if="address.province != address.city">{{ address.province }}</template> {{ address.city }} {{ address.area }} {{ address.address }}</div>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+        </div>
+        <!--商品列表-->
+		<template v-for="store in dianpu">
+        <ul class="ware-list">
+            <div class="h1"></div>
+			<div class="order-div-h bg-fff">
+				<div class="order-div-h-logo">
+					<i class="layui-icon layui-icon-home"></i>
+				</div>
+				<span class="order-div-span pl05">店铺名称</span>
+			</div>
+            <li>订单号：{{ store.ordersn }}</li>
+            
+            <li v-for="goods in store.shopinfo">
+                <div class="fl">
+                    <div class="img">
+                        <img :src="goods.goods_img" />
+                    </div>
+                </div>
+                <div class="fr">
+                    <div class="tit">{{ goods.goods_name }}</div>
+                    <div class="spec"><span v-for="spec in goods.specid_name.split(',')">{{ spec }}</span></div>
+                    <div class="other"><i>￥</i>&nbsp;<span class="price">{{ goods.goods_price }}</span><span>×{{ goods.goods_num }}</span></div>
+                </div>
+                <div class="clear"></div>
+            </li>
+        </ul>
+
+        <!--商品其他-->
+        <div class="ware-other" style="margin-top: 0;">
+            <div class="freight">
+                <div class="fl tit">运费</div>
+                <div class="fr con">￥<span>0.00</span></div>
+                <div class="clear"></div>
+            </div>
+            <!--<div class="Total">
+                <span class="tit">小计：</span>
+                <span class="piece"><i>￥</i>&nbsp;{{ store.totalprice }}</span>
+            </div>-->
+        </div>
+		</template>
+        
+        <!--商品其他-->
+        <div class="ware-other">
+            <div class="leave-word">
+                <div class="fl tit">卖家留言：</div>
+                <div class="fr input">
+                    <span><template v-if="other.usernote">{{ other.usernote }}</template><template v-else>无</template></span>
+                    <!--<input type="text" placeholder="可填写您和卖家达成一致的要求" >-->
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <!--商品支付方式-->
+        <div class="ware-other">
+            <ul class="payment">
+                 <template v-if="parseFloat(amount) > 0">
+                 <label>
+                    <li class="Balance" @click="paylist(1)" >
+                        <input type="radio" name="paylist" value="1" class="radioclass"/>
+                        <div class="more"><i class="layui-icon layui-icon-right"></i></div>
+                        <div class="fl img"><img src="{APP_PATH}statics/public/images/Balance-Pay.png"></div>
+                        <div class="fl price"><span>余额</span><span class="piece"><i>￥</i>&nbsp; {{ amount }}</span></div>
+                        <div class="clear"></div>
+                    </li>
+                </label>
+                </template>
+                <label>
+                    <li class="WeChat" @click="paylist(2)" >
+                        <input type="radio" checked="checked" name="paylist" value="2" class="radioclass" />
+                        <div class="more"><i class="layui-icon layui-icon-right"></i></div>
+                        <div class="fl img"><img src="{APP_PATH}statics/public/images/WeChat-Pay.png"></div>
+                        <div class="fl price"><span>微信</span></div>
+                        <div class="clear"></div>
+                    </li>
+                </label>
+                <label>
+                    <li class="Alipay" @click="paylist(3)" >
+                        <input type="radio" name="paylist" value="3" class="radioclass" />
+                        <div class="more"><i class="layui-icon layui-icon-right"></i></div>
+                        <div class="fl img"><img src="{APP_PATH}statics/public/images/Alipay-Pay.png"></div>
+                        <div class="fl price"><span>支付宝</span></div>
+                        <div class="clear"></div>
+                    </li>
+                </label>
+            </ul>
+        </div>
+        <div style=" height: 0.8rem"></div>
+        <div class="Pay-footer-fixd">
+            <div class="fl">合计：<span>￥&nbsp;{{ other.total }}</span></div>
+			<div class="fr"><botton type="botton" @click="submit">确认支付</botton></div>
+        </div>
+    </form>
+    
+    <style>
+	.Pay-footer-fixd .fr botton {
+    padding: 0.05rem 0.4rem;
+    border-radius: 0.03rem;
+    line-height: 0.3rem;
+    height: 0.3rem;
+    margin-top: 0.05rem;
+    color: #fff;
+    font-size: 0.15rem;
+    background: #ff4400;
+    border: none;
+}
+
+	</style>
+    <script>
+    $(function () {
+        //由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：
+        ;
+        ! function () {
+            var layer = layui.layer,
+                form = layui.form,
+                $ = layui.jquery,
+                upload = layui.upload,
+                table = layui.table;
+				var orderid = '{$_GET[orderid]}';
+				var sn = '{$_GET[sn]}';
+			console.log(sn,orderid);
+				aj.post('index.php?m=zyorder&c=zyorder_api&a=shop_pay',{shopid:orderid,orderid:sn,userid:'1',type:'1',forward:''},function(data){
+					console.log(data);
+					if(data.status == 'success'){
+						var items = data.data;
+						var amount = '';
+						var pay_type = '2';
+						//获取选择地址
+						$.ajax({
+							url:'index.php?m=zymember&c=zymember_api&a=pub_memberinfo',
+							type:'POST', //GET
+							async:false,    //或true,是否同步
+							data:{
+								userid:1,
+								field:'amount'
+							},
+							timeout:5000,    //超时时间
+							dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+							success:function(data){
+								if(data.status == 'success'){
+									console.log(data.data);
+									amount = data.data.amount;
+								}else{
+									layer.msg('未获得余额信息');
+								}
+							}
+						});
+						items.amount = amount;
+						items.pay_type = pay_type;
+						items.pay_password = '';
+						console.log(items);
+						var order = new Vue({
+							el: '#order',
+							data: items,
+							methods:{
+								paylist:function(i){
+									if(i == '1'){
+										//layer.msg('余额支付');
+										this.pay_type = i;
+									}else if(i == '2'){
+										//layer.msg('微信支付');
+										this.pay_type = i;
+									}else if(i == '3'){
+										//layer.msg('支付宝支付');
+										this.pay_type = i;
+									}
+								},
+								submit:function(){
+									
+									if(this.pay_type == '1'){
+										layer.prompt(function(value, index, elem){
+											var oids = orderid.split(',');
+											if(oids.length > 0){
+												aj.post('index.php?m=zyorder&c=zyorder_api&a=prepay_for_balance',{oids:oids,paycode:value},function(data){
+													console.log(data);
+													if(data.status == 'success'){
+													    layer.close(index);
+														layer.msg('购买成功');
+														setTimeout("javascript:location.href='{APP_PATH}index.php?m=zyorder&c=index&a=order_list&userid=1&status=2'", 1000);
+													}else{
+														layer.close(index);
+														layer.msg(data.message);
+														if(data.code == '-3'){
+															setTimeout("javascript:location.href='{APP_PATH}index.php?m=zymember&c=index&a=security'", 1000);
+														}else if(data.code == '0'){
+															setTimeout("javascript:location.href='{APP_PATH}index.php?m=zymember&c=index&a=login'", 1000);
+														}
+													}
+
+												})
+												
+											}
+										});
+										//console.log('余额支付');
+									}else if(this.pay_type == '2'){
+										layer.msg('微信支付待开放');
+										console.log('微信支付');
+									}else if(this.pay_type == '3'){
+										layer.msg('支付宝支付待开放');
+										console.log('支付宝支付');
+									}
+									
+								}
+							}
+						});
+						
+					}else{
+						layer.msg('页面加载失败');
+					}
+				})
+				
+			
+        }();
+    });
+    </script>
+    {template "zyorder","footer"}
+</body>
+
+</html>

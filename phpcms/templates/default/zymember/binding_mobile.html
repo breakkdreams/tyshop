@@ -1,0 +1,85 @@
+﻿{template "zymember","header"}
+
+
+<body>
+    <div class="personal-head">
+        <div class="fl head-icon">
+            <i class="layui-icon layui-icon-left"></i>
+        </div>
+        <div class="fl head-icon">
+        </div>
+        <div class="title">
+            <span>绑定手机号码</span>
+        </div>
+        <div class="fr head-icon">
+        </div>
+        <div class="fr head-icon">
+        </div>
+
+    </div>
+    <div style="height: 0.5rem;width: 100%;"></div>
+
+    <!--绑定手机号码-->
+    <div class="layui-container bg-fff" style=" background: #fff;">
+        <div class="layui-row">
+
+            <div class="bg-fff radius1 login-box ">
+                <div class="pl2 pr2">
+                    <div class="layui-tab sm-fs" lay-filter="login-TabBrief">
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">
+                                <form class="layui-form" action="">
+                                    <div class="layui-form-item p-r ">
+                                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入手机号码" class="layui-input">
+                                    </div>
+                                    <div class="h1"></div>
+                                    <div class="layui-form-item p-r">
+                                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入验证码" class="layui-input"
+                                               style=" width:calc(100% - 1.25rem);">
+                                        <button class="layui-btn p-a">获取验证码</button>
+                                    </div>
+                                    <div class="h1"></div>
+                                    <div class="lh015 xs-fs">
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div class="h1"></div>
+                                    <div class="layui-form-item submit">
+                                        <button class="layui-btn layui-btn-fluid">确定</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="h2"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+{template "zymember","footer"}
+
+
+
+    <script>
+        //由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：
+        ;
+        ! function () {
+
+            var layer = layui.layer,
+                form = layui.form,
+                $ = layui.jquery,
+                upload = layui.upload,
+                table = layui.table;
+
+            $('.no-way').on('click', function () {
+                layer.msg('该栏目正在开发中...');
+            });
+
+        }();
+    </script>
+</body>
+
+</html>

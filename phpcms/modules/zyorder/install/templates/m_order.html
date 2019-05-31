@@ -1,0 +1,392 @@
+﻿<!doctype html>
+<meta name="viewport" content="width=device-width, target-densitydpi=high-dpi" />
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>personal_center</title>
+  <link type="text/css" rel="stylesheet" href="{CSS_PATH}order/style.css">
+
+  <script type="text/javascript" src="{JS_PATH}order/auto-size.js"></script>
+  <script language="javascript" type="text/javascript" src="{JS_PATH}jquery.min.js"></script>
+  <script src="{JS_PATH}order/layer.js"></script>
+  <script src="{JS_PATH}order/ajax.js"></script>
+  <script src="{JS_PATH}order/flayer.js"></script>
+  <script src="{JS_PATH}order/vue.min.js"></script>
+  <style>
+  .del_btn  {padding:.124rem .248rem;border: 1px solid ;color: #aaa;}
+  .cancel_btn  {padding:.124rem .248rem;border: 1px solid ;color: #aaa;}
+  .pj_btn  {padding:.124rem .248rem;border: 1px solid ;color: #55acee; margin-right: 5px;}
+  .zf_btn  {padding:.124rem .248rem;border: 1px solid ;color: #55acee; margin-right: 5px;}
+  .qrsh_btn {padding:.124rem .248rem;border: 1px solid ;color: #55acee; margin-right: 5px;}
+</style>
+</head>
+<body style="background: #f1f1f1;">
+  <!--会员中心通用头部-->
+
+
+  <!-- 订单-->
+  <article class="htmleaf-container">
+    <div class="tabs2">
+      <div class="tabs-header2">
+        <div class="border"></div>
+        <ul>
+          <li class="active">
+            <a href="#tab-1" tab-id="1" ripple="ripple" ripple-color="#FFF">全部</a>
+          </li>
+          <li>
+            <a href="#tab-2" tab-id="2" ripple="ripple" ripple-color="#FFF">待支付</a>
+          </li>
+          <li>
+            <a href="#tab-3" tab-id="3" ripple="ripple" ripple-color="#FFF">待发货</a>
+          </li>
+          <li>
+            <a href="#tab-4" tab-id="4" ripple="ripple" ripple-color="#FFF">待收货</a>
+          </li>
+          <li>
+            <a href="#tab-5" tab-id="5" ripple="ripple" ripple-color="#FFF">待评价</a>
+          </li>
+        </ul>
+      </div>
+      <button style="width:100px;height:30px;" value="点击" onclick="sub()">点击</button>
+      <div  id="app" class="tabs-content2">
+        <!-- 账号密码登录 -->
+        <div tab-id="1" class="tab active">
+          
+          <div class="bt10" style="background:#f5f5f5"></div>
+          
+          <div v-for = "data in datas">
+            <a href="{APP_PATH}index.php?m=zyorder&c=index&a=order_info">
+              <div>
+                <!--头-->
+                <div class="shop-hg">
+                  <div class="shop-hg fl-pl">
+                    <img src="{IMG_PATH}order/cssdbz.jpg" style="width: .62rem;margin:.19rem .248rem 0 0;">
+                  </div>
+                  <div style="float: left;line-height: 1rem;height: 1rem">{{data.address}}</div>
+                  <div class="zyl-zt shop-hg" style="float: right;padding-right: .248rem;">
+                    <template v-if="data.status==1">待支付</template>
+                    <template v-if="data.status==2">待发货</template>
+                    <template v-if="data.status==3">待收货</template>
+                    <template v-if="data.status==4">待评价</template>
+                    <template v-if="data.status==5">已完成</template>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+                <!--商品内容-->
+                <div style="padding:.124rem 0 ;background: #fdfdfd;">
+                  <div class="fl-pl shop-w1"><img src="{IMG_PATH}order/csshop.jpg" style="width: 100%; display: block;"></div>
+                  <div class="fl-pl shop-w2">腾讯10QB10个QQ币10元Q币10个QQB10个QB10元QB直充/自动充值/秒冲  </div>
+                  <div class="shop-w3"><p style="font-weight: 700;">￥9.40</p><p>x1</p></div>
+                  <div class="clear"></div>
+                </div>
+                <!--价格运费-->
+                <div class="shop-hg" style="text-align: right;padding-right: .248rem;">
+                  <a>共<a style="font-weight: 700;">1</a>件商品</a>
+                  <a>合计：<a style="font-weight: 700;">￥9.40</a></a>
+                  <a>(含运费<a style="font-weight: 700;">￥0.00</a>)</a>
+                </div>
+                <!--各种按钮-->
+                <div class="shop-hg" style="text-align: right;border-top: 1px solid #ccc;padding-right: .248rem;">
+                  <input class="order_id" hidden="true" value="{$order['id']}">
+                  <a v-if="data.status==1" class="zf_btn">支付</a>
+                  <a v-on:click="qxdd" class="cancel_btn">取消订单</a>
+                  <a v-if="data.status==2" v-on:click="qxdd" class="cancel_btn">取消订单</a>
+                  <a v-if="data.status==3" v-on:click="qrsh" class="qrsh_btn">确认收货</a>
+                  <a v-if="data.status==4" href="{APP_PATH}index.php?m=zyorder&c=index&a=evaluate_ym" class="pj_btn">评价</a>
+                  <a v-if="data.status==5" v-on:click="scdd" class="del_btn">删除订单</a>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="bt10" style="background:#f5f5f5"></div>
+          
+        </div>
+        <!-- 手机快捷登录 -->
+        <div tab-id="2" class="tab">
+
+        </div>
+        <!-- 手机快捷登录 -->
+        <div tab-id="3" class="tab">
+
+        </div>
+        <!-- 手机快捷登录 -->
+        <div tab-id="4" class="tab">
+
+        </div>
+        <!-- 手机快捷登录 -->
+        <div tab-id="5" class="tab">
+
+        </div>
+      </div>
+    </div>
+  </article>
+
+
+  <!--选项卡和JS-->
+  <script>
+    $(document).ready(function () {
+     var activePos = $('.tabs-header2 .active').position();
+     function changePos() {
+       activePos = $('.tabs-header2 .active').position();
+       $('.border').stop().css({
+        left: activePos.left,
+        width: $('.tabs-header2 .active').width()
+      });
+     }
+     changePos();
+
+     $('.tabs-header2 a').on('click', function (e) {
+       e.preventDefault();
+       var tabId = $(this).attr('tab-id');
+       $('.tabs-header2 a').stop().parent().removeClass('active');
+       $(this).stop().parent().addClass('active');
+       changePos();
+       tabCurrentItem = tabItems.filter('.active');
+       $('.tab').stop().fadeOut(300, function () {
+        $(this).removeClass('active');
+      }).hide();
+       $('.tab[tab-id="' + tabId + '"]').stop().fadeIn(300, function (){
+        $(this).addClass('active');
+      });
+     });
+     var tabItems = $('.tabs-header ul li');
+   });
+ </script>
+ <script>
+  var vm=new Vue({
+    el: "#app",
+    data: {
+      datas: []
+    },
+    mounted:function(){
+      this.showData();
+        //需要执行的方法可以在mounted中进行触发，其获取的数据可以赋到data中后，可以放在前面进行渲染
+      },
+      methods:{
+        showData:function () {
+         aj.get("{APP_PATH}index.php?m=zyorder&c=index&a=order_list", {userid:1,page:1,pagesize:10}, function(data){
+		 console.log(data);
+          vm.datas = data.data;
+          
+        });
+       },
+       qrsh:function(e){
+        le.lconfirm("确认收货？","确认","取消",function(){
+          aj.post("{APP_PATH}index.php?m=zyorder&c=index&a=order_qrsh",{userid:1,id:34},function(data){
+            
+           if(data.code){
+            layer.msg(data.message);
+          }else{
+            layer.msg(data.message);
+          }
+        });
+        });
+      },
+      qxdd:function(e){
+        le.lconfirm("取消订单","确认","取消",function(){
+          aj.post("{APP_PATH}index.php?m=zyorder&c=index&a=order_cancel",{userid:1,id:39},function(data){
+		    console.log(data);
+            if(data.code){
+              layer.msg(data.message);
+            }else{
+              layer.msg(data.message);
+            }
+          });
+        })
+      },
+      scdd:function(){
+        le.lconfirm("是否要删除","确认","取消",function(){
+         aj.post("{APP_PATH}index.php?m=zyorder&c=index&a=order_delete",{userid:1,id:34},function(data){
+          
+           if(data.code){
+            layer.msg(data.message);
+          }else{
+            layer.msg(data.message);
+          }
+        });
+       });
+      }
+    }
+  });
+</script>
+
+<script>
+
+  
+
+ function order_disapprove(id){
+   var index = layer.prompt({
+     title : '确定要驳回此单?'
+   },function(product_cause, index){
+     $.ajax({
+      type: "post",
+      url: '?m=zyshop&c=zyshop&a=disapproved&pc_hash=<?php echo $_SESSION['pc_hash'];?>',
+      dataType: "json",
+      data: {'id':id,'product_cause':product_cause},
+      beforeSend: function(xhr){
+                                    //console.log(xhr);
+                                  },
+                                  success: function (data) {
+                                  //console.log(data);
+                                  if(data){
+
+                                    if(data.code==1){
+                                     layer.msg('驳回成功');
+                                     layer.close(index);
+                                     location.reload();
+                                   }
+                                 }else{
+                                   layer.msg('失败');
+                                   layer.close(index);
+                                 }
+                               },
+        error:function(request){//请求失败之后的操作
+          layer.msg('连接失败');
+
+        },
+
+      });
+   });
+   layui.jquery('#layui-layer'+index + " .layui-layer-input").val('请填写驳回理由');
+
+ }
+ 
+             //确认收货
+             $('.qrsh_btn').click(function(){
+              alert("asasa"); 
+            })
+            //取消订单按钮点击监听
+            $('.cancel_btn').click(function(){
+             var id = $(this).parent().find('.order_id').val();
+             layer.confirm('取消订单？', {
+                 btn : [ '确定', '取消' ]//按钮
+               }, function(index) {
+                $.ajax({
+                  url:'{APP_PATH}index.php?m=zyorder&c=index&a=order_dzf_cancel',   
+                  type:'POST',   
+                  dataType:'json',
+                  data: {
+                    id:id
+                  },   
+                  success : function(data){
+                    
+                    if(!data.code){
+                     alert("取消订单失败")
+                   }
+                   if(data.code){
+                    alert("取消订单成功");
+                  }
+                },
+                error:function(){
+
+                }
+              });
+
+              },function(index){
+                layer.close(index);
+              }); 
+           })
+            $('.del_btn').click(function(){
+             var id = $(this).parent().find('.order_id').val();
+             layer.confirm('确认要删除吗？', {
+                 btn : [ '确定', '取消' ]//按钮
+               }, function(index) {
+                $.ajax({
+                  url:'{APP_PATH}index.php?m=zyorder&c=index&a=order_dzf_delete',   
+                  type:'POST',   
+                  dataType:'json',
+                  data: {
+                    id:id
+                  },   
+                  success : function(data){
+                    if(!data.code){
+                     layer.close(index);
+                     alert("userid为空或者参数遗漏");
+                   }
+                   if(data.code){
+                     layer.close(index);
+                     alert("生成订单成功");
+                   }
+                 },
+                 error:function(){
+
+                 }
+               });
+
+              },function(index){
+                layer.close(index);
+                var id = $('.del_btn').parent().find('.order_id').val();
+                alert(id);
+              }); 
+
+           })
+            $('.zf_btn').click(function(){
+              var id = $(this).parent().find('.order_id').val();
+              layer.confirm('确认要支付吗？', {
+                 btn : [ '确定', '取消' ]//按钮
+               }, function(index) {
+                $.ajax({
+                  url:'{APP_PATH}index.php?m=zyorder&c=index&a=order_pay',   
+                  type:'POST',   
+                  dataType:'json',
+                  data: {
+                    id:id
+                  },   
+                  success : function(data){
+                    if(!data.code){
+                      alert("支付失败");
+                    }
+                    if(data.code){
+                      alert("支付成功");
+                    }
+                  },
+                  error:function(){
+
+                  }
+                });
+              },function(index){
+                layer.close(index);
+                alert("取消")
+              }); 
+
+            })
+            function sub(){
+
+             $.ajax({
+              url:'{APP_PATH}index.php?m=zyorder&c=index&a=addorder',   
+              type:'POST',   
+              dataType:'json',
+              data: {
+                shopid:2,
+                buycarid:1,
+                province:"1",
+                city:"2",
+                area:"3",
+                address:"君越",
+				userid : '2',
+                lx_mobile:"182546456",
+                lx_name:"匿名",
+                lx_code:"1001",
+                totalprice:"1000",
+                usernote:"备注"
+              },   
+              success : function(data){
+                if(!data.code){
+                  alert("userid为空或者参数遗漏");
+                }
+                if(data.code){
+                  alert("生成订单成功");
+                }
+              },
+              error:function(){
+
+              }
+            });
+           }
+
+
+         </script>
+
+
+       </body>
+       </html>

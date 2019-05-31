@@ -1,0 +1,121 @@
+{template 'zyaddr','header'}
+   <style>
+	.personal-head { height: 0.5rem; text-align: center; position: fixed; top: 0; background: #f9f9f9; z-index: 999;width: 100%; }
+	.personal-head img { width: 100%; }
+	.head-icon .layui-icon { font-size: 0.19rem; }
+	.fl.head-icon { width: 0.20rem; height: 0.2rem; margin: 0.15rem 0 0 0.1rem; }
+	.fr.head-icon { width: 0.20rem; height: 0.2rem; margin: 0.15rem 0.1rem 0 0; }
+	.personal-head .head-icon .layui-icon { font-size: 0.19rem; }
+	.personal-head .title { line-height: 0.5rem; font-size: 0.15rem; height: 0.5rem; overflow: hidden; position: absolute; left: 0.7rem; width: calc(100% - 1.7rem); padding: 0 0.15rem; }
+
+	</style>
+    <div class="personal-head">
+        <div class="fl head-icon">
+         	<a onClick="javascript :history.back(-1);">
+               <i class="layui-icon layui-icon-left"></i>
+         	</a>
+		</div>
+
+        <div class="fl head-icon">
+        </div>
+        <div class="title" style=" width: calc(100% - 1.7rem + 0.3rem);">
+            <span>选择收货地址</span>
+        </div>
+        <div class="fr head-icon">
+
+        </div>
+        <div class="fr head-icon">
+
+        </div>
+    </div>
+    <div style="height: 0.5rem;width: 100%;"></div>
+<div class="address">
+	<form class="layui-form" action="">
+		{loop $lists $data}
+		<div class="list">
+			<div class="top">
+				<div class="fl">{$data['name']}</div>
+				<div class="fr" style="text-align:right;">{$data['phone']}</div>
+			</div>
+			<div class="addr">{$data['province']}{$data['city']}{$data['district']}{$data['address']}</div>
+			<div class="bom">
+				<div class="layui-form-item" pane="">
+					{if $data['default']==1}
+					<input type="radio" name="default" lay-skin="primary" lay-filter="default" data-id="{$data['id']}" title="默认" checked="">
+					{else}
+					<input type="radio" name="default" lay-skin="primary" lay-filter="default" data-id="{$data['id']}" title="默认">
+					{/if}
+				</div>
+				<div class="action">
+					<a data-id="{$data['id']}" class="edit" ><i class="icon-post iconfont"></i>编辑</a>
+					<a  class="del" data-id="{$data['id']}"><i class="icon-delete iconfont"></i>删除</a>
+				</div>
+			</div>
+		</div>
+		{/loop}
+		<a href="index.php?m=zyaddr&c=index&a=add&met={$_GET[met]}&carts={$_GET[carts]}" class="layui-btn layui-btn-warm layui-btn-sm address-btn">添加地址</a>
+	</form>
+</div>
+
+<style>
+	.address .list .bom .action a{display: inline-block;}
+</style>
+<script>
+$(function(){
+	layui.use(['form'], function() {
+		var form = layui.form
+			, layer = layui.layer;
+
+		form.on('radio(default)', function(data){
+			event.stopPropagation();
+			var id = $(this).attr('data-id');
+			$.ajax({
+				url: 'index.php?m=zyaddr&c=index&a=changeDefault',
+				type: 'post',
+				data: {id:id,default:1},
+				dataType: 'json',
+				success: function(res){
+					mui.toast(res.message);
+					
+				}
+			});
+		});
+		form.render();
+	});
+	var met = '{$_GET[met]}';
+	var carts = '{$_GET[carts]}';
+	$('.address').on('click','.list',function(){
+		if(met){
+			console.log('立即结算',$(this).find('input').data('id'),met);
+			javascript:location.href='{APP_PATH}index.php?m=hpshop&c=index&a=settlement&carts='+carts+'&met='+met+'&address='+$(this).find('input').data('id');
+		}else if(carts){
+			console.log('购物车结算',$(this).find('input').data('id'),carts);
+			javascript:location.href='{APP_PATH}index.php?m=hpshop&c=index&a=settlement&carts='+carts+'&address='+$(this).find('input').data('id');
+		}
+	})
+	$('.address').on('click','.edit',function(event){
+		var id = $(this).data('id');
+		event.stopPropagation();
+		javascript:location.href='{APP_PATH}index.php?m=zyaddr&c=index&a=edit&id='+id+'&met='+met+'&carts='+carts;
+
+		
+	})
+	$('.address').on('click','.del',function(event){
+		var obj = this;
+		var id = $(this).data('id');
+		$.ajax({
+			url: 'index.php?m=zyaddr&c=index&a=del',
+			type: 'post',
+			data: {id:id},
+			dataType: 'json',
+			success: function(res){
+				mui.toast(res.message);
+				if(res.code==200){
+					$(obj).parents('.list').remove();
+				}
+			}
+		});
+		event.stopPropagation();
+	})
+})
+</script>

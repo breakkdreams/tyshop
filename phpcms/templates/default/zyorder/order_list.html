@@ -1,0 +1,236 @@
+﻿{template "zyorder","top-head"}
+
+<body class="bg-f4f4f4">
+    <style>
+        .layui-layer-content { text-align: center }
+    </style>
+    <div class="personal-order-head">
+		<div class="personal-head" style=" position: relative;">
+			<a onclick="javascript :history.back(-1);">
+				<div class="fl head-icon">
+					<i class="layui-icon layui-icon-left"></i>
+				</div>
+			</a>
+			<div class="fl head-icon">
+			</div>
+			<div class="title">
+				<span>订单中心</span>
+			</div>
+			<div class="fr head-icon">
+				<i class="layui-icon layui-icon-set"></i>
+			</div>
+			<div class="fr head-icon">
+				<i class="layui-icon layui-icon-search"></i>
+			</div>
+		</div>
+		<div class="order-head">
+            <ul>
+                
+                <a href="{APP_PATH}index.php?m=zyorder&c=index&a=order_list">
+                    <li {if !$_GET[status]} class="on" {/if}>全部</li>
+                </a>
+                <a href="{APP_PATH}index.php?m=zyorder&c=index&a=order_list&status=1">
+                    <li {if $_GET[status]== 1} class="on" {/if}>待付款</li>
+                </a>
+                <a href="{APP_PATH}index.php?m=zyorder&c=index&a=order_list&status=2">
+                    <li {if $_GET[status]== 2} class="on" {/if}>待发货</li>
+                </a>
+                <a href="{APP_PATH}index.php?m=zyorder&c=index&a=order_list&status=3">
+                    <li {if $_GET[status]== 3} class="on" {/if}>待收货</li>
+                </a>
+                <a href="{APP_PATH}index.php?m=zyorder&c=index&a=order_list&status=4">
+                    <li {if $_GET[status]== 4} class="on" {/if}>待评价</li>
+                </a>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div style="height: 0.9rem;"></div>
+    <!--待付款订单-->
+    <div id="order_list" ></div>
+	{template "hpshop","bottom-footer"}
+    {template "hpshop","footer"}
+    <script>
+		$(function(){
+			//由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：
+			;
+			! function () {
+				var $ = layui.jquery,
+					layer = layui.layer,
+					form = layui.form,
+					flow = layui.flow;
+				
+				var status = '{$_GET[status]}';
+						flow.load({
+							elem: '#order_list' //指定列表容器
+							,mb:'10'
+							,isAuto:true
+							,done: function(page, next){ //到达临界点（默认滚动触发），触发下一页
+								var lis = [];	
+								console.log(page);
+								  //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
+								aj.get('index.php?m=zyorder&c=zyorder_api&a=order_list&page='+page,{status:status},function(data){
+									console.log(data);
+									layui.each(data.data, function(index, item){
+										//订单状态
+										var status ;
+										if(item.status == '1'){
+											status = '<span class="order-div-status">待付款</span>';
+										}else if(item.status == '2'){
+											status = '<span class="order-div-status">待发货</span>';
+										
+										}else if(item.status == '3'){
+											status = '<span class="order-div-status">待收货</span>';
+										
+										}else if(item.status == '4'){
+											status = '<span class="order-div-status">待评价</span>';
+										
+										}else if(item.status == '5'){
+											status = '<span class="order-div-status">已完成</span>';
+										
+										}else if(item.status == '6'){
+											status = '<span class="order-div-status">已取消</span>';
+										}
+										
+										// 订单头 店铺加订单状态
+										var store = '<div class="order-div-h"><div class="order-div-h-logo"><i class="layui-icon layui-icon-home"></i></div><span class="order-div-span">'+item.storename+'</span>'+status+'</div>';
+										
+										//订单产品列表详情
+										var goods_list = '';
+										$.each(item.goodsinfo,function(i,v){
+											goods_list+='<div class="order-content"><div class="fl order-shop-w1"><img src="'+ v.goods_img +'"></div><div class="fl order-shop-w2"><p>'+ v.goods_name +'</p><p class="p2">'+ v.specid_name +'</p></div><div class="order-shop-w3"><p>￥'+ v.goods_price +'</p><p>x'+ v.goods_num +'</p></div><div class="clear"></div></div>';
+										})
+										var store_total = '<div class="order-div-h"><p class="order-div-total"><span>共<span class="c-ff0000">'+ item.goodsinfo.length +'</span>件商品</span>&nbsp;&nbsp;&nbsp;<span>合计：￥<span class="c-ff0000">'+ item.totalprice +'</span></span></p></div>';
+										var botton ;
+										if(item.status == 1){
+											botton = '<botton class="layui-btn layui-btn-radius layui-btn-primary layui-btn-xs cancel abrogate" data-id="'+item.id+'">取消订单</botton><a href="{APP_PATH}index.php?m=zyorder&c=index&a=shop_pay&orderid='+item.id+'&sn='+item.ordersn+'" class="layui-btn layui-btn-radius layui-btn-primary layui-btn-xs payment" style="border: 1px solid red;color:red;">付款</a>';
+										}else if(item.status == 2){
+											botton = '<button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-xs cancel remind">提醒发货</button><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-xs cancel tk" data-id="'+item.id+'">申请退款</button>';
+										
+										}else if(item.status == 3){
+											botton = '<button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-xs cancel check" data-id="'+item.id+'">查看订单</button><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-xs payment sh" style="border: 1px solid red;color:red;" data-id="'+item.id+'" data-sn="'+item.ordersn+'">确认收货</button>';
+										
+										}else if(item.status == 4){
+											botton = '<button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-xs delete conceal" data-id="'+item.id+'">删除订单</button><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-xs logistics check" data-id="'+item.id+'">查看订单</button><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-xs evaluate" style="border: 1px solid red;color:red;" data-id="'+item.id+'">评价</button>';
+										
+										}else if(item.status == 5){
+											botton = '<button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-xs delete conceal" data-id="'+item.id+'">删除订单</button><button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-xs logistics check" data-id="'+item.id+'">查看订单</button>';
+										
+										}else if(item.status == 6){
+											botton = '<button class="layui-btn layui-btn-radius layui-btn-primary layui-btn-xs delete conceal" data-id="'+item.id+'">删除订单</button>';
+										}
+		
+		
+										var store_botton = '<div class="order-div-h"><p class="order-div-operation">'+ botton +'</p></div>';
+										
+										lis.push('<div class="order-div">'+store+goods_list+store_total+store_botton+'</div>');
+										
+									});
+									//执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+									//pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+									next(lis.join(''), page < data.page.totalpage);   
+								});
+					
+						}
+					});
+				//取消订单
+				$('#order_list').on('click','.abrogate',function(){
+					console.log($(this).data('id'));
+					var id = $(this).data('id');
+					layer.confirm('您确定要放弃订单吗？', {
+					  btn: ['确定','取消'] //按钮
+					}, function(){
+						aj.post('index.php?m=zyorder&c=zyorder_api&a=order_cancel',{id:id},function(data){
+							if(data.status == 'success'){
+								layer.msg('订单删除成功');
+								setTimeout("window.location.reload()", 1000);
+							}else{
+								layer.msg(data.message);
+							}
+						})
+					})
+				})
+				//删除订单
+				$('#order_list').on('click','.conceal',function(){
+					console.log($(this).data('id'));
+					var id = $(this).data('id');
+					layer.confirm('删除后不可恢复，您确定要删除吗？', {
+					  btn: ['确定','取消'] //按钮
+					}, function(){
+						aj.post('index.php?m=zyorder&c=zyorder_api&a=order_cancel',{id:id},function(data){
+							if(data.status == 'success'){
+								layer.msg('订单删除成功');
+								setTimeout("window.location.reload()", 1000);
+							}else{
+								layer.msg(data.message);
+							}
+						})
+					})
+				})
+				//提醒发货
+				$('#order_list').on('click','.remind',function(){
+					layer.msg('已催促尽快商家发货');
+				})
+
+				//申请退款
+				$('#order_list').on('click','.tk',function(){
+					var id = $(this).data('id');
+					console.log(id);
+					layer.confirm('您确定要申请退款吗？', {
+					  btn: ['确定','取消'] //按钮
+					}, function(){
+						aj.post('index.php?m=zyorder&c=zyorder_api&a=apply_tk',{id:id},function(data){
+							console.log(data);
+							if(data.status == 'success'){
+								layer.msg('已申请退款');
+								setTimeout("window.location.reload()", 1000);
+							}else{
+								layer.msg(data.message);
+							}
+
+						})
+					})
+				})
+				//确认收货
+				$('#order_list').on('click','.sh',function(){
+					var id = $(this).data('id');
+					var sn = $(this).data('sn');
+					console.log(id);
+					layer.confirm('您确认收货吗？', {
+					  btn: ['确定','取消'] //按钮
+					}, function(){
+						aj.post('index.php?m=zyorder&c=zyorder_api&a=order_qrsh',{id:id},function(data){
+							console.log(data);
+							if(data.status == 'success'){
+								layer.msg('收货成功');
+								//评价页
+								setTimeout(function(){javascript:location.href='{APP_PATH}index.php?m=zyorder&c=index&a=evaluate&orderid='+id}, 10);
+								//setTimeout("window.location.reload()", 1000);
+							}else{
+								layer.msg(data.message);
+							}
+
+						})
+					})
+				})
+				//评价
+				$('#order_list').on('click','.evaluate',function(){
+					var id = $(this).data('id');
+					console.log(id);
+					setTimeout(function(){javascript:location.href='{APP_PATH}index.php?m=zyorder&c=index&a=evaluate&orderid='+id}, 10);
+				})
+
+				//查看订单
+				$('#order_list').on('click','.check',function(){
+					var id = $(this).data('id');
+					console.log(id);
+					setTimeout(function(){javascript:location.href='{APP_PATH}index.php?m=zyorder&c=index&a=order_info_ym&orderid='+id}, 10);
+				})
+
+			}();
+			
+		})
+    </script>
+</body>
+
+</html>

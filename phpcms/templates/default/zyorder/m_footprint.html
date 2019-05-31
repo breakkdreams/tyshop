@@ -1,0 +1,27 @@
+﻿{template 'm_member', 'head'}
+
+    {loop $num $v}
+	<ul>
+       	<div class="bt30" style="line-height: .744rem;padding-left: .248rem;color: #A7A7A7;">{php echo date('m月d日',$v['footprint_time']);}</div>
+        
+		{pc:get sql="select * from phpcms_zyorder_footprint where userid=$_userid and addtime>=$date and footprint_time=$v[footprint_time] order by id desc" return="infos"}
+        {loop $infos $r}
+ 		<li class="index-wares-li2 fl" style="margin-left: 1%;width: 32%;margin-bottom:1% ">
+    		<a href="{$r['url']}" >
+    	    	<div class="wares-img">
+    	            <img src="{$r['thumb']}" style="width: 3.2rem;height: 3.2rem;" >
+    	        </div>
+    	        <div class="wares-word" >
+    	            <p class="wares-keyword">{$r['title']}</p>
+    	            <div class="Price"><i>￥</i><span class="Front Price">{$r['price']}</span><span class="more">...</span></div>
+    	        </div>
+    	    </a>
+    	</li>
+        {/loop}
+        {/pc}
+    	<div class="clear"></div>
+    </ul>
+	{/loop}
+ 
+    
+{template 'm_member', 'foot'}

@@ -1,0 +1,286 @@
+{template "zymember","top-head"}
+
+<body>
+    <style>
+        a.layui-layer-btn2 { background-color: #84c101; border: 1px solid #84c101; color: #FFF; }
+    </style>
+    <div class='personal-head'>
+        <a onClick='javascript :history.back(-1);'>
+            <div class='fl head-icon'>
+                <i class='layui-icon layui-icon-left'></i>
+            </div>
+        </a>
+        <div class='fl head-icon'>
+        </div>
+        <div class='title'>
+            <span>个人资料</span>
+        </div>
+        <div class='fr head-icon'>
+
+        </div>
+        <div class='fr head-icon'>
+			
+        </div>
+    </div>
+    <div style="height: 0.5rem;width: 100%;"></div>
+    <!--个人信息-->
+    <div class="layui-container grxx" style="min-height: calc( 100vh - 1rem); background: #f1f1f1;">
+        <div class="layui-row">
+            <form class="layui-form " action="" id="info">
+                <div class="box box-indent sm-fs bg-fff">
+                    <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
+                        <ul>
+                            <hr>
+                            <li>
+                                <div class="layui-form-item lg-item">
+                                    <label class="layui-form-label primary-label-1">头像</label>
+
+<!-- <button type="button" class="layui-btn" id="test1">
+    <i class="layui-icon">&#xe67c;</i>上传图片
+</button>
+ -->
+                                    <div class="layui-input-block text-right">
+                                        <a class="d-b no-way pt05 pb05 h5">
+                                            <!--  d-ib 点文字触发 -->
+                                            <!-- d-b 点区域块触发 -->
+                                            <span>
+                                               
+                                                <b class="img radius-o"><img :src="headimgurl" id="uploadhead" @click="uploadhead"></b>
+
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <hr>
+                            <li>
+                                <div class="layui-form-item primary-item">
+                                    <label class="layui-form-label primary-label-1">用户名</label>
+                                    <div class="layui-input-block text-right">
+                                        <a class="d-b">
+                                            <!--  d-ib 点文字触发 -->
+                                            <!-- d-b 点区域块触发 -->
+                                            <span class="">{{ username }}</span>
+
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </li>
+                            <hr>
+                            <li onClick="modify_nickname()">
+                                <div class="layui-form-item primary-item">
+                                    <label class="layui-form-label primary-label-1">昵称</label>
+                                    <div class="layui-input-block text-right">
+                                        <a class="d-b no-way">
+                                            <!--  d-ib 点文字触发 -->
+                                            <!-- d-b 点区域块触发 -->
+                                            <span class="">{{ nickname }}<i class="fa fa-angle-right pl1 lg-fs"></i></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <hr>
+                            <li onClick="modify_sex()">
+                                <div class="layui-form-item primary-item">
+                                    <label class="layui-form-label primary-label-1">性别</label>
+                                    <div class="layui-input-block text-right">
+                                        <a class="d-b no-way">
+                                            <!--  d-ib 点文字触发 -->
+                                            <!-- d-b 点区域块触发 -->
+                                            <span class="">{{ sex }}<i class="fa fa-angle-right pl1 lg-fs"></i></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <hr>
+                            <li onClick="modify_phone()">
+                                <div class="layui-form-item primary-item">
+                                    <label class="layui-form-label primary-label-1">手机号</label>
+                                    <div class="layui-input-block text-right">
+                                        <a class="d-b no-way">
+                                            <!--  d-ib 点文字触发 -->
+                                            <!-- d-b 点区域块触发 -->
+                                            <span class="">{{ mobile }}<i class="fa fa-angle-right pl1 lg-fs"></i></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <hr>
+                            <li>
+                                <div class="layui-form-item primary-item">
+                                    <label class="layui-form-label primary-label-1">微信绑定</label>
+                                    <div class="layui-input-block text-right">
+                                        <a class="d-b no-way">
+                                            <!--  d-ib 点文字触发 -->
+                                            <!-- d-b 点区域块触发 -->
+                                            <span class="" v-if=" wechat_name === ''">未绑定<i class="fa fa-angle-right pl1 lg-fs"></i></span>
+                                            <span class="" v-else>{{ wechat_name }}</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <hr>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+
+    {template "zymember","bottom-footer"}
+    {template "zymember","footer"}
+
+    <script>
+    $(function () {
+
+        //由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：
+        ;
+        ! function () {
+            var layer = layui.layer,
+                form = layui.form,
+                $ = layui.jquery,
+                upload = layui.upload,
+                table = layui.table;
+			
+            var userid = {$_userid};
+            aj.post('index.php?m=zymember&c=zymember_api&a=pub_memberinfo', { 'userid': userid, 'field': 'headimgurl,username,nickname,sex,mobile,wechat_name' }, function (data) {
+                console.log(data.data);
+                if (data.status == 'error') {
+                    layer.msg(data.message);
+                } else {
+					data.data.upload = 1;
+                    var info = new Vue({
+                        el: '#info',
+                        data: data.data,
+						methods:{
+							uploadhead:function(){
+								layui.upload.render({
+									elem: '#uploadhead',
+									url: 'api.php?op=single_uploadfile&types=1' //上传接口
+										,
+									done: function (res) {
+										//上传完毕回调
+										console.log(res);
+										console.log('success');
+									},
+									error: function (res) {
+										//请求异常回调
+										console.log(res);
+										console.log('error')
+									}
+								});
+							}
+						},
+						mounted(){
+							layui.upload.render({
+								elem: '#uploadhead',
+								url: 'api.php?op=single_uploadfile&types=1' //上传接口
+									,
+								done: function (res) {
+									//上传完毕回调
+									console.log(res);
+									console.log('success');
+								},
+								error: function (res) {
+									//请求异常回调
+									console.log(res);
+									console.log('error')
+								}
+							});
+						}
+                    });
+                };
+            });
+			
+
+			
+
+            $('.no-way').on('click', function () {
+                layer.msg('该栏目正在开发中...');
+            });
+
+        }();
+
+    });
+
+
+        function modify_nickname() {
+            layer.prompt({ title: '输入新昵称', formType: 3 }, function (name, index) {
+                var d = {};
+                d.userid = {$_userid};
+                d.type = 1;
+                d.nickname = name;
+                aj.post('index.php?m=zymember&c=api&a=edit_memberdata', d, function (data) {
+                    console.log(data);
+                    if (data.status == 'error') {
+                        layer.msg(data.message);
+                    } else {
+                        layer.msg(data.message);
+                        setTimeout("javascript:location.href='" + data.data.forward + "'", 1000);
+                    }
+                });
+
+                layer.close(index);
+            });
+        };
+        function modify_phone() {
+            layer.confirm('是否需要修改手机号码？', {
+                btn: ['是', '否'] //按钮
+            }, function () {
+                javascript: location.href = 'index.php?m=zymember&c=index&a=update_mobile';
+            });
+        };
+        function modify_sex() {
+            var d = {};
+            d.userid = {$_userid};
+            d.type = 1;
+
+            layer.confirm('修改性别', {
+                title: '提示信息'
+                , btn: ['男', '保密', '女'] //可以无限个按钮
+                , btn1: function () {
+                    d.sex = "男";
+                    aj.post('index.php?m=zymember&c=api&a=edit_memberdata', d, function (data) {
+                        console.log(data);
+                        if (data.status == 'error') {
+                            layer.msg(data.message);
+                        } else {
+                            layer.msg(data.message);
+                            setTimeout("javascript:location.href='" + data.data.forward + "'", 1000);
+                        }
+                    });
+                }
+                , btn2: function () {
+                    d.sex = "保密";
+                    aj.post('index.php?m=zymember&c=api&a=edit_memberdata', d, function (data) {
+                        console.log(data);
+                        if (data.status == 'error') {
+                            layer.msg(data.message);
+                        } else {
+                            layer.msg(data.message);
+                            setTimeout("javascript:location.href='" + data.data.forward + "'", 1000);
+                        }
+                    });
+                }, btn3: function () {
+                    d.sex = "女";
+                    aj.post('index.php?m=zymember&c=api&a=edit_memberdata', d, function (data) {
+                        console.log(data);
+                        if (data.status == 'error') {
+                            layer.msg(data.message);
+                        } else {
+                            layer.msg(data.message);
+                            setTimeout("javascript:location.href='" + data.data.forward + "'", 1000);
+                        }
+                    });
+                }
+            });
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+.member-index-head .more .layui-badge { background: #321ab5; }
+.member-index-head .portrait { border-radius: 0; }
+.jy-wall-icon .iconfont { font-size: .5rem; color: #fff }
+.max-fs { font-size: .5rem }
+.jy-cz-input { overflow: hidden; }
+.bl1 { border: 1px solid #e6e6e6; }
+.bg-1e90ff { background-color: #1e90ff }
+.index-search, .index-search2 { position: relative; display: inline-block; line-height: 0.6rem; font-size: 0.15rem; height: 0.6rem; overflow: hidden; width: 95%; }
+.index-search input, .index-search2 input { width: 100%; border-style: none; border-radius: 5px; padding-left: .1rem; font-size: .15rem; line-height: .4rem; }
+.fl-nav { position: fixed; background-color: #f9f9f9; left: 0; top: calc(0.6rem + 1px); width: 25%; overflow-y: scroll; height: calc(100% - 0.6rem ); }
+.fl-nav li { position: relative; font-size: .13rem; text-align: center; line-height: .35rem; }
+.fl-nav-on { background-color: #fff }
+.fl-nav-on:after { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: .025rem; background-color: #ff0000; }
+.fl-con { position: fixed; right: 0; top: calc(0.6rem + 1px); width: 75%; background-color: #fff; height: calc(100% - 0.6rem ); overflow-y: scroll; display: none; }
+.fl-con:first-of-type { display: block; }
+.fl-ban { padding: 0.05rem; }
+.fl-ban img { width: 100%; }
+.fl-con li { text-align: center; }
+.fl-img img { width: 90%; }
+.fl-con li p { font-size: 0.13rem; }
+.search-fl .personal-head { position: relative; }
+.fl-search { display: none; }
+.index-search2 input { width: 95% }
+.index-search2 button { position: absolute;right: 0rem;top: 0.1rem;display: inline-block;border-style: none;background-color: #ff0000;color: #fff;padding: 0 0.1rem;line-height: 0.4rem;border-radius: 0 5px 5px 0; }
+.search-box { border-style: none; border-radius: 5px; padding-left: .1rem; font-size: .15rem; line-height: .4rem; height: 0.4rem; background: #fff; margin: 0.1rem 0; text-align: left; }
+.fl-tj { padding: 0 .1rem; background-color: #fff; }
+.fl-tj .layui-col-xs4 { margin-top: 0.05rem; padding: 0 0.05rem; }
+.fl-tj .layui-col-xs4 a { display: inline-block; border: 1px solid #efefef; line-height: .25rem; border-radius: 5px; text-align: center; font-size: .13rem; width: 100%; }
+/*---------------------------------- 产品列表页 1 ----------------------------------*/
+.display-list .screen { height: 0.3rem; background: #fff; line-height: 0.3rem; }
+.display-list .screen-fix { position: fixed; top: 0; z-index: 99; width: 100%; max-width: 50pc; box-shadow: 1px 1px 1px #bfbfbf }
+.display-list .screen ul li { width: 20%; text-align: center }
+.display-list .screen ul li.Positive { background: url(../../../images/shop/pe/ino.png) no-repeat; background-position: 100% .15rem; background-size: auto .5rem }
+.display-list .screen ul li.Aspect { background: url(../../../images/shop/pe/pos.png) no-repeat; background-position: 100% .15rem; background-size: auto .5rem }
+.display-list .screen ul li.more { background: url(../../../images/shop/pe/pos2.png) no-repeat; background-position: 100% .15rem; background-size: auto .5rem }
+.display-list .screen ul li.manner img { margin-top: .1rem; height: .6rem; text-align: center }
+.display-list .screen ul li.on a { border-bottom: 2px solid #ff9595; color: #ff9595 }
+.display-list .screen li a { display: block; height: 0.3rem; color: #8c8c8c; font-size: .13rem; line-height: 0.3rem; }
+.display-list { min-height: calc(100vh - 1.2rem - 1.2rem) }
+/*---------------------------------- 产品列表页2 ----------------------------------*/
+.index-wares-ul {padding: 0.025rem;}
+.index-wares-li a { display: block; background: #fff }
+.index-wares-li { width: 50%;box-sizing: border-box;padding: 0.025rem; }
+.index-wares-li .wares-img {width: 100%;height: 2rem;text-align: center;}
+.index-wares-li .wares-img img {width: 100%;height: 100%;}
+.index-wares-li .wares-word { padding: .055rem 3% }
+.index-wares-li .wares-word .wares-keyword { overflow: hidden; height: 0.4rem; font-size: .11rem; line-height: .2rem }
+.index-wares-li .wares-word .wares-keyword span { margin-right: .1rem; padding: 0 .1rem; border-radius: 2px; color: #fff }
+.index-wares-li .wares-word .Price { position: relative; overflow: hidden; height: .2rem; color: #f23030; line-height: .2rem }
+.index-wares-li .wares-word .Price .Front { font-size: .11rem }
+.index-wares-li .wares-word .Price .Last { font-size: .11rem }
+.index-wares-li .wares-word .Price .prime { padding-left: .2rem; color: #ccc; text-decoration: line-through; font-size: .11rem }
+.index-wares-li .wares-word .Price .more { position: absolute; right: 0; height: .4rem; letter-spacing: .05rem; line-height: .4rem }
+.index-wares-ul .Load-more { margin-bottom: 2px; height: 1rem; border-top: 1px solid #d4d4d4; border-bottom: 1px solid #d4d4d4; text-align: center; line-height: 1rem }
+.index-wares-ul .Load-more a { display: block; color: #888; text-align: center }

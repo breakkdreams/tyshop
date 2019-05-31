@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>评价</title>
+  <link type="text/css" rel="stylesheet" href="{CSS_PATH}order/new_file.css">
+  <link type="text/css" rel="stylesheet" href="{CSS_PATH}order/style.css">
+  <script language="javascript" type="text/javascript" src="{JS_PATH}jquery.min.js"></script>
+  <script src="{JS_PATH}order/layer.js"></script>
+  <script src="{JS_PATH}order/ajax.js"></script>
+</head>
+
+<body>
+	<form name="myform" action="?m=zyorder&c=index&a=evaluate" method="post" id="myform">
+    <!--内容 star-->
+    <div class="contaniner fixed-cont">
+      <div>
+          <!--头-->
+      <div class="shop-hg">
+          <div class="shop-hg fl-pl">
+            <img src="{IMG_PATH}order/cssdbz.jpg" style="width: .62rem;margin:.19rem .248rem 0 0;">
+          </div>
+          <div style="float: left;line-height: 1rem;height: 1rem">欧飞网游数卡专营店</div>
+          <div class="zyl-zt shop-hg" style="float: right;padding-right: .248rem;">{$status}</div>
+          <div class="clear"></div>
+      </div>
+      <!--商品内容-->
+      <div style="padding:.124rem 0 ;background: #fdfdfd;">
+        <div class="fl-pl shop-w1"><img src="{IMG_PATH}order/csshop.jpg" style="width: 100%; display: block;"></div>
+        <div class="fl-pl shop-w2">腾讯10QB10个QQ币10元Q币10个QQB10个QB10元QB直充/自动充值/秒冲  </div>
+        <div class="shop-w3"><p style="font-weight: 700;">￥9.40</p><p>x1</p></div>
+        <div class="clear"></div>
+    </div>
+    <!--价格运费-->
+    <div class="shop-hg" style="text-align: right;padding-right: .248rem;">
+        <a>共<a style="font-weight: 700;">1</a>件商品</a>
+        <a>合计：<a style="font-weight: 700;">￥9.40</a></a>
+        <a>(含运费<a style="font-weight: 700;">￥0.00</a>)</a>
+    </div>
+    <!--各种按钮-->
+
+</div>
+<input type="hidden" name="orderid" value="{$order['id']}">
+<!--1-->
+<section class="assess">
+    <p>
+       <textarea rows="7" placeholder="请写下对商品的感受吧，对我们帮助很大哦"></textarea>
+    </p>
+</section>
+<!--2-->
+<section class="main">
+ <div class="main-wrap">
+    <span class="revtit">综合评分:</span>
+    <div id="mydiv1" currentIndex="0" class="mydiv">
+        <ul class="star_ul">
+            <li num="1"><img src="{IMG_PATH}order/star_empty.png" class="xing_hui"/></li>
+            <li num="2"><img src="{IMG_PATH}order/star_empty.png"  class="xing_hui"/></li>
+            <li num="3"><img src="{IMG_PATH}order/star_empty.png"  class="xing_hui"/></li>
+            <li num="4"><img src="{IMG_PATH}order/star_empty.png"  class="xing_hui"/></li>
+            <li num="5"><img src="{IMG_PATH}order/star_empty.png"  class="xing_hui"/></li>
+        </ul>
+		<input type="hidden" id="zonghepingfen">
+    </div>
+</div>
+
+<div class="main-wrap">
+    <span class="revtit">基本素质:</span>
+    <div id="mydiv2" currentIndex="0" class="mydiv">
+        <ul class="star_ul">
+            <li num="1"><img src="{IMG_PATH}order/star_empty.png" class="xing_hui"/></li>
+            <li num="2"><img src="{IMG_PATH}order/star_empty.png"  class="xing_hui"/></li>
+            <li num="3"><img src="{IMG_PATH}order/star_empty.png"  class="xing_hui"/></li>
+            <li num="4"><img src="{IMG_PATH}order/star_empty.png"  class="xing_hui"/></li>
+            <li num="5"><img src="{IMG_PATH}order/star_empty.png"  class="xing_hui"/></li>
+        </ul>
+		<input type="hidden" id="jibensuzhi">
+    </div>
+</div>
+
+<div class="main-wrap">
+    <span class="revtit">仪容着装:</span>
+    <div id="mydiv3" currentIndex="0" class="mydiv">
+        <ul class="star_ul">
+            <li num="1"><img src="{IMG_PATH}order/star_empty.png" class="xing_hui"/></li>
+            <li num="2"><img src="{IMG_PATH}order/star_empty.png"  class="xing_hui"/></li>
+            <li num="3"><img src="{IMG_PATH}order/star_empty.png"  class="xing_hui"/></li>
+            <li num="4"><img src="{IMG_PATH}order/star_empty.png"  class="xing_hui"/></li>
+            <li num="5"><img src="{IMG_PATH}order/star_empty.png"  class="xing_hui"/></li>
+        </ul>
+		<input type="hidden" id="yirongzhuozhuang">
+    </div>
+</div>
+</section>
+</div>
+</div>
+<!--内容 end-->
+
+<!--底部 star-->
+<footer class="assess-footer fixed-footer ">
+ <ul>
+    <li>
+       <input type="checkbox" id="ass" />
+       <label for="ass" onselectstart="return false">匿名评价</label>
+   </li>
+   <input type="button" id="sub_eva"  value="发表评论" />
+</ul>
+</footer>
+<!--底部  end-->
+<script type="text/javascript">
+    $(".assess-footer ul li label").on('touchstart',function(){
+     if($(this).hasClass('assd')){
+        $(".assess-footer ul li label").removeClass("assd")
+    }else{
+        $(".assess-footer ul li label").addClass("assd")
+    };
+    });
+
+ $('#sub_eva').click(function(){
+    let zonghepingfen = $('#zonghepingfen').val();
+    let jibensuzhi = $('#jibensuzhi').val();
+    let yirongzhuozhuang = $('#yirongzhuozhuang').val();
+
+    var url = "{APP_PATH}index.php?m=zyorder&c=index&a=evaluate";
+    aj.post(, {userid:1,id:34}, function(data){
+               console.log(data);
+    });
+ })
+
+//匿名评价
+var isclick = false;
+function change(mydivid,num) {
+    if (!isclick) {
+        var tds = $("#"+mydivid+" ul li");
+        for (var i = 0; i < num; i++) {
+            var td = tds[i];
+            $(td).find("img").attr("src","{IMG_PATH}order\/star_full.png");
+        }
+        var tindex = $("#"+mydivid).attr("currentIndex");
+        tindex = tindex==0?0:tindex+1;
+        for (var j = num; j < tindex; j++) {
+            var td = tds[j];
+            $(td).find("img").attr("src","{IMG_PATH}order\/star_empty.png");
+        }
+        $("#"+mydivid).attr("currentIndex",num);
+    }
+}
+function repeal(mydivid,num) {
+    if (!isclick) {
+        var tds = $("#"+mydivid+" ul li");
+        var tindex = $("#"+mydivid).attr("currentIndex");
+        tindex = tindex==0?0:tindex+1;
+        for (var i = tindex; i < num; i++) {
+            var td = tds[i];
+            $(td).find("img").attr("src","{IMG_PATH}order\/star_empty.png");
+        }
+        $("#"+mydivid).attr("currentIndex",num);
+    }
+}
+function change1(mydivid,num) {
+    if (!isclick) {
+        change(mydivid,num);
+
+    }
+    else {
+        alert("Sorry,You had clicked me!");
+    }
+}
+$(function(){
+    initEvent('mydiv1');
+    initEvent('mydiv2');
+    initEvent('mydiv3');
+});
+function initEvent(mydivid) {
+    var tds = $("#"+mydivid+" ul li");
+    for (var i = 0; i < tds.length; i++) {
+        var td = tds[i];
+        $(td).live('mouseover',function(){var num = $(this).attr("num");change(mydivid,num);});
+        $(td).live('click',function(){
+		var num = $(this).attr("num");change1(mydivid,num);
+		$("#"+mydivid+" input").val(num);
+		});
+		
+    }
+}
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,254 @@
+<?php defined('IN_ADMIN') or exit('No permission resources.');?>
+<?php include $this->admin_tpl('header', 'admin');?>
+
+<style>
+    .clear{ clear: both; }
+    .btn:hover{text-decoration: none;}
+    .btn {display: inline-block; height: 34px; line-height: 34px; padding: 0 14px; background-color: #009688; color: #fff; white-space: nowrap; text-align: center; font-size: 14px; border: none; border-radius: 2px; cursor: pointer; transition: all .3s; -webkit-transition: all .3s; box-sizing: border-box;}
+    .btn:hover {opacity: .8;color: #fff;}
+    .btn-primary {
+        background-color: #fff;
+        border: 1px solid #C9C9C9;
+        color: #555;
+    }
+    .btn-warm {
+        background-color: #FFB800;
+    }
+
+    #province,#city,#districe{
+        width: 100px;
+    }
+
+</style>
+
+<!-- 地区联动js -->
+<script type="text/javascript">
+    /**
+     * [changeCity 选择省，出现市]
+     * @return {[type]} [description]
+     */
+    function changeCity(){
+        var provinceId = $("#province option:selected").attr("data-id");
+        var cityContent = '<option value="" selected="">市</option>';
+        $("#districe").html('<option value="" selected="">区</option>');
+
+
+        $.ajax({
+          url: "<?php echo  APP_PATH?>index.php?m=zymember&c=json&a=city_json",
+          data: {
+            provinceid: provinceId
+          },        //规定要发送到服务器的数据。
+          dataType:'json',
+          type:'GET',       //规定请求的类型（GET 或 POST）。
+          success: function( result,status,xhr ) {
+            $.each(result, function(i, obj) {
+                cityContent += '<option value="'+obj.name+'" data-id="'+obj.linkageid+'" >'+obj.name+'</option>';
+
+            });
+            cityContent = $("#city").html(cityContent);
+
+            //alert('success');
+          },        //当请求成功时运行的函数。
+          error:function( xhr,status,error ){
+            alert('error');
+          },        //如果请求失败要运行的函数。
+        });
+
+    }
+    /**
+     * [changeDistrice 选择市，出现区]
+     * @return {[type]} [description]
+     */
+    function changeDistrice(){
+        var cityId = $("#districe option:selected").attr("data-id");
+        var districeContent = '<option value="" selected="">区</option>';
+
+        $.ajax({
+          url: "<?php echo  APP_PATH?>index.php?m=zymember&c=json&a=districe_json",
+          data: {
+            cityid: cityId
+          },        //规定要发送到服务器的数据。
+          dataType:'json',
+          type:'GET',       //规定请求的类型（GET 或 POST）。
+          success: function( result,status,xhr ) {
+
+
+            $.each(result, function(i, obj) {
+                districeContent += '<option value="'+obj.name+'" data-id="'+obj.id+'" >'+obj.name+'</option>';
+
+            });
+            districeContent = $("#districe").html(districeContent);
+
+            //alert('success');
+          },        //当请求成功时运行的函数。
+          error:function( xhr,status,error ){
+            alert('error');
+          },        //如果请求失败要运行的函数。
+        });
+
+    }
+
+</script>
+
+<script language="javascript" type="text/javascript" src="<?php echo JS_PATH?>formvalidator.js" charset="UTF-8"></script>
+<script language="javascript" type="text/javascript" src="<?php echo JS_PATH?>formvalidatorregex.js" charset="UTF-8"></script>
+<script type="text/javascript">
+
+<!--
+$(function(){
+	$.formValidator.initConfig({autotip:true,formid:"myform",onerror:function(msg){}});
+	$("#nickname").formValidator({onshow:"请输入昵称",onfocus:"应该为2-20位之间"}).inputValidator({min:2,max:20,onerror:"应该为2-20位之间"}).regexValidator({regexp:"ps_username",datatype:"enum",onerror:"昵称格式错误"});
+	$("#name").formValidator({onshow:"请输入姓名",onfocus:"应该为2-20位之间"}).inputValidator({min:2,max:20,onerror:"应该为2-20位之间"}).regexValidator({regexp:"ps_username",datatype:"enum",onerror:"姓名格式错误"});
+	$("#idcard").formValidator({onshow:"请输入身份证号",onfocus:"应该为15-24位之间"}).inputValidator({min:2,max:20,onerror:"应该为15-24位之间"}).regexValidator({regexp:"ps_username",datatype:"enum",onerror:"身份证格式错误"});
+
+
+
+
+	$("#password").formValidator({onshow:"请输入密码",onfocus:"密码应该为6-20位之间"}).inputValidator({min:6,max:20,onerror:"密码应该为6-20位之间"});
+	$("#pwdconfirm").formValidator({onshow:"请输入确认密码",onfocus:"请输入两次密码不同。",oncorrect:"密码输入一致"}).compareValidator({desid:"password",operateor:"=",onerror:"请输入两次密码不同。"});
+	/*$("#point").formValidator({tipid:"pointtip",onshow:"请输入积分点数，积分点数将影响会员用户组",onfocus:"积分点数应该为1-8位的数字"}).regexValidator({regexp:"^\\d{1,8}$",onerror:"积分点数应该为1-8位的数字"});
+	$("#email").formValidator({onshow:"请输入邮箱",onfocus:"邮箱格式错误",oncorrect:"邮箱格式正确"}).inputValidator({min:2,max:32,onerror:"邮箱应该为2-32位之间"}).regexValidator({regexp:"email",datatype:"enum",onerror:"邮箱格式错误"}).ajaxValidator({
+	    type : "get",
+		url : "",
+		data :"m=member&c=member&a=public_checkemail_ajax",
+		datatype : "html",
+		async:'false',
+		success : function(data){
+            if( data == "1" ) {
+                return true;
+			} else {
+                return false;
+			}
+		},
+		buttons: $("#dosubmit"),
+		onerror : "禁止注册或邮箱已存在",
+		onwait : "请稍候..."
+	});*/
+
+
+	$("#mobile").formValidator({onshow:"请输入手机号",onfocus:"手机号不能为空"}).inputValidator({min:1,max:999,onerror:"手机号不能为空"}).ajaxValidator({
+	    type : "get",
+		url : "",
+		data :"m=zymember&c=verify&a=public_checkmobile_ajax",
+		datatype : "html",
+		async:'false',
+		success : function(data){
+            if(data==1)
+			{
+                return true;
+			}
+            else
+			{
+                return false;
+			}
+		},
+		buttons: $("#dosubmit"),
+		onerror : "<?php echo L('该用户已存在')?>",
+		onwait : "<?php echo L('正在查询')?>"
+	});
+});
+//-->
+</script>
+<div class="pad-10">
+<div class="common-form">
+<form name="myform" action="?m=zymember&c=member&a=manager_manage_add" method="post" id="myform">
+
+<div class="explain-col">
+	<fieldset>
+		<legend>基本信息</legend>
+		<table width="100%" class="table_form">
+			<tr>
+				<td width="90">昵称</td>
+				<td><input type="text" name="nickname" id="nickname" value="" class="input-text"></input></td>
+			</tr>
+			<tr>
+				<td>真实姓名</td>
+				<td><input type="text" name="name" id="name" value="" class="input-text"></input></td>
+			</tr>
+			<tr>
+				<td>身份证号</td>
+				<td><input type="text" name="idcard" id="idcard" value="" class="input-text" size="30"></input></td>
+			</tr>
+			<!-- <tr>
+				<td>职业</td>
+				<td><input type="text" name="professional" id="professional" value="" class="input-text"></input></td>
+			</tr> -->
+
+			<tr>
+				<td>手机号码</td>
+				<td>
+				<input type="text" name="mobile" class="input-text" id="mobile" size="15"></input>
+				</td>
+			</tr>
+			<tr>
+				<td>密码</td>
+				<td><input type="password" name="password" class="input-text" id="password" value=""></input></td>
+			</tr>
+			<tr>
+				<td>确认密码</td>
+				<td><input type="password" name="pwdconfirm" class="input-text" id="pwdconfirm" value=""></input></td>
+			</tr>
+			<tr>
+				<td>等级</td>
+				<td>
+				<select name="memberinfo_types" id="memberinfo_types">
+				    <option value="" selected="">请选择等级</option>
+				    <option value="11" <?php if ($_GET['memberinfo_types']=='11') {?>selected<?php }?>>一级</option>
+				    <option value="12" <?php if ($_GET['memberinfo_types']=='12') {?>selected<?php }?>>二级</option>
+				    <option value="13" <?php if ($_GET['memberinfo_types']=='13') {?>selected<?php }?>>三级</option>
+				</select>
+				</td>
+			</tr>
+			<tr>
+				<td>地区</td>
+				<td>
+				<select name="province" id="province" onchange ="changeCity()">
+				    <option value="" selected="">省</option>
+				    <?php foreach ($province_arr as $key) {?>
+				        <option value="<?php echo $key['name']?>" data-id="<?php echo $key['linkageid']?>"><?php echo $key['name']?></option>
+				    <?php }?>
+				</select>
+				<select name="city" id="city">
+				    <option value="" selected="">市</option>
+				</select>
+				<!-- <select name="districe" id="districe">
+				    <option value="" selected="">区</option>
+				</select> -->
+				</td>
+			</tr>
+			<!-- <tr>
+				<td>产品分类</td>
+				<td>
+				<select name="product_types" id="product_types">
+				    <option value="" selected="">申请产品分类</option>
+				    <option value="通过循环来获取" <?php if ($_GET['product_types']=='通过循环来获取') {?>selected<?php }?>>通过循环来获取</option>
+				    <option value="通过循环来获取" <?php if ($_GET['product_types']=='通过循环来获取') {?>selected<?php }?>>通过循环来获取</option>
+				</select>
+				</td>
+			</tr> -->
+			<tr>
+				<td>是否让其禁用</td>
+				<td>
+					<input type="radio" name="disable" checked id="disable1" value="1"><label for="disable1">否</label>
+					<input type="radio" name="disable" id="disable2" value="2"><label for="disable2">是</label>
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+</div>
+
+    <div class="bk15"></div>
+    <input name="dosubmit" type="submit" id="dosubmit" value="<?php echo L('submit')?>" class="dialog">
+</form>
+</div>
+</div>
+
+
+
+
+
+
+
+
+</body>
+</html>

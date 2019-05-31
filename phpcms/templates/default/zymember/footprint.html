@@ -1,0 +1,102 @@
+﻿{php $SEO['site_title'] = '足迹'}
+{template "zymember","top-head"}
+
+<body>
+    <div class="personal-head">
+        <div class="fl head-icon">
+			<a onClick="javascript :history.back(-1);">
+				<i class="layui-icon layui-icon-left"></i>
+			</a>
+        </div>
+        <div class="fl head-icon">
+        </div>
+        <div class="title">
+            <span>足迹</span>
+        </div>
+        <div class="fr head-icon">
+        </div>
+        <div class="fr head-icon">
+        </div>
+
+    </div>
+	<div class="h5"></div>
+    <!--收藏-->
+    <div class="layui-container" style="background: #f5f5f5; min-height: calc(100vh - 0.5rem)">
+			<!-- 单天 -->				
+			<script id="footprint_list" type="text/html">
+			<div class="box box-indent sm-fs">
+			<ul class="footprint pt05 layui-row">
+				{{#  layui.each(d, function(index, item){ }}
+				<li class="footprint-time layui-col-xs12 layui-col-sm12 layui-col-md12">
+					<span class="pl05 pr05 lh2">{{ item.addtime }}</span>
+				</li>
+				{{#  layui.each(item.data, function(i, v){ }}
+				<li class="footprint-list layui-col-xs4 layui-col-sm4 layui-col-md4">
+					<div class=" bg-fff">
+						<div class="img img-contain p-r"><img src="{{ v.thumb}}" class="p-a"></div>
+						<div class="text p-r lh4 h4">
+							<div class="bg-fs pl05 pr05" style=" width: calc(100% - 0.3rem);overflow: hidden;"><span class="c-e2513c"><i>￥</i>{{ v.price }}</span></div>
+						</div>
+						
+					</div>
+				</li>
+				{{#  }); }}
+				{{#  }); }}
+			</ul>
+			</div>
+			</script>
+			<div id="view"></div>
+    </div>
+	<style>
+		.layui-flow-more{display: block;clear: both;}
+	</style>
+
+
+    {template "zymember","footer"}
+
+
+
+
+    <script>
+$(function () {
+		
+		
+        //由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：
+        ;
+        ! function () {
+
+            var layer = layui.layer,
+                form = layui.form,
+                $ = layui.jquery,
+                upload = layui.upload,
+                table = layui.table,
+				laytpl = layui.laytpl;				
+				$.ajax({
+					url:'index.php?m=zymember&c=api&a=footprint_list',
+					type:"POST",
+					data:{},
+					dataType:"json", 
+					success:function(res){
+						if(res.data){
+							var data = res.data;
+							console.log(data);
+							var getTpl = footprint_list.innerHTML
+							,view = document.getElementById('view');
+							laytpl(getTpl).render(data, function(html){
+							  view.innerHTML = html;
+							});
+
+						}
+
+					}
+				});
+						
+			
+			
+			
+        }();
+});
+    </script>
+</body>
+
+</html>

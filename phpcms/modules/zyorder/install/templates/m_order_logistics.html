@@ -1,0 +1,80 @@
+﻿{template "zyorder","top-head"}
+
+
+<body class="bg-f4f4f4">
+	<div class="personal-head" style=" position: relative;">
+		<a onclick="javascript :history.back(-1);">
+			<div class="fl head-icon">
+				<i class="layui-icon layui-icon-left"></i>
+			</div>
+		</a>
+		<div class="fl head-icon">
+		</div>
+		<div class="title">
+			<span>物流详情</span>
+		</div>
+		<div class="fr head-icon">
+		</div>
+		<div class="fr head-icon">
+		</div>
+	</div>
+    <div class="view-logistics-head">
+        <p>订单编号：</p>
+        <p>快递：</p>
+        <p>预计送达：12月8日</p>
+    </div>
+
+    <ul class="layui-timeline">
+        <li class="layui-timeline-item">
+            <i class="layui-icon layui-timeline-axis">&#xe643;</i>
+            <div class="layui-timeline-content layui-text">
+                <h3 class="layui-timeline-title">已签收</h3>
+                <p>
+                    您的订单已有本人签收
+                    <br>2018-12-08 12：52：00
+                </p>
+            </div>
+        </li>
+        <li class="layui-timeline-item">
+            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+            <div class="layui-timeline-content layui-text">
+                <h3 class="layui-timeline-title">派送中</h3>
+                <p>
+                    挥洒反间谍法看了孵化基地撒谎风陵渡税服务好几回了副科级单价萨克，正在派送中，送货员电话：12345678910
+                    <br>2018-12-08 12：52：00
+                </p>
+            </div>
+        </li>
+        <li class="layui-timeline-item">
+            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+            <div class="layui-timeline-content layui-text">
+                <h3 class="layui-timeline-title">运输中</h3>
+                <p>
+                    <br>快递已到浙江省
+                    <br>2018-12-08 12：52：00
+                    <br>快递已到浙江省【台州分拨中心】
+                    <br>2018-12-08 12：52：00
+                </p>
+            </div>
+        </li>
+        <li class="layui-timeline-item">
+            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+            <div class="layui-timeline-content layui-text">
+                <div class="layui-timeline-title">过去</div>
+            </div>
+        </li>
+    </ul>
+
+    {template "hpshop","footer"}
+    <script>
+        //由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：
+        ;
+        ! function () {
+            var layer = layui.layer,
+                form = layui.form;
+
+        }();
+    </script>
+</body>
+
+</html>
